@@ -60,7 +60,7 @@ while IFS= read -r staged; do
     *.md | *.txt | *.rst | \
         *.py | *.go | *.js | *.jsx | *.ts | *.tsx | *.rs | *.java | *.kt | \
         *.rb | *.php | *.c | *.cpp | *.h | *.hpp | *.cs | *.scala | *.swift | \
-        *.lua | *.pl | *.sh | *.bash)
+        *.lua | *.pl | *.sh | *.bash | *.yml | *.yaml)
         set -- "$@" "$staged"
         ;;
     esac

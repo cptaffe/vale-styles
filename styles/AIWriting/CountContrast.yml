@@ -9,9 +9,13 @@
 #
 # NOTE: Vale CONCATENATES multiple `raw:` entries into a single pattern
 # rather than alternating them. Keep every alternative inside one entry.
+#
+# The `#+ ` alternative in the anchor is for YAML: vale's YAML comment scope
+# keeps the literal `# ` marker in the text it hands to rules, so a bare `^`
+# never matches there. Python and friends strip the marker.
 extends: existence
 message: "Slogan fragment ('%s') is an LLM tell. Write a sentence with a verb."
 level: warning
 nonword: true
 raw:
-  - '(?m)(?:^|[.!?:] +)(?:One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten|\d+) (?:(?:[\w-]+ ){1,3}(?:over|across|behind|atop|against) (?:one|a single)(?: [\w-]+){1,2}(?:[.!?:]|$)|(?:[\w-]+ ){0,2}[\w-]+, (?:one|zero|no) [\w-]+(?:[.!?]|$))'
+  - '(?m)(?:^(?:#+ )?|[.!?:] +)(?:One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten|\d+) (?:(?:[\w-]+ ){1,3}(?:over|across|behind|atop|against) (?:one|a single)(?: [\w-]+){1,2}(?:[.!?:]|$)|(?:[\w-]+ ){0,2}[\w-]+, (?:one|zero|no) [\w-]+(?:[.!?]|$))'
