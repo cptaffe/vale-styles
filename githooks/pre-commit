@@ -56,11 +56,21 @@ while IFS= read -r staged; do
         continue
         ;;
     esac
+    # Mirrors FormatByExtension in vale's internal/core/format.go. A type not
+    # in that table is prose-linted line by line -- every commit that touches
+    # a lockfile then fails on "spelling" inside data -- so additions here
+    # need a grammar there first. That is also why *.kt, *.sh, and *.bash are
+    # absent: Vale has no grammar for them yet.
     case "$staged" in
-    *.md | *.txt | *.rst | \
-        *.py | *.go | *.js | *.jsx | *.ts | *.tsx | *.rs | *.java | *.kt | \
+    *.md | *.mdx | *.txt | *.rst | *.adoc | *.org | \
+        *.py | *.go | *.js | *.jsx | *.ts | *.tsx | *.rs | *.java | \
         *.rb | *.php | *.c | *.cpp | *.h | *.hpp | *.cs | *.scala | *.swift | \
-        *.lua | *.pl | *.sh | *.bash | *.yml | *.yaml)
+        *.lua | *.pl | *.r | *.R | *.jl | *.hs | *.clj | *.ps1 | *.proto | *.qml | \
+        *.css | *.scss | *.sass | *.yml | *.yaml | \
+        *.groovy | *.gradle | Jenkinsfile | */Jenkinsfile | \
+        *.dockerfile | Dockerfile | */Dockerfile | Containerfile | */Containerfile | \
+        *.mk | Makefile | */Makefile | GNUmakefile | */GNUmakefile | \
+        *.rego | *.env | *.env.example)
         set -- "$@" "$staged"
         ;;
     esac
