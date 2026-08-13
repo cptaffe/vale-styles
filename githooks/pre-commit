@@ -49,10 +49,12 @@ done
 set --
 while IFS= read -r staged; do
     [ -f "$staged" ] || continue
-    # Word lists are words, not prose; .vale.ini carves them out of Vale, and
-    # Harper has no equivalent carve-out, so drop them from the list here.
+    # Word lists are words, and Vale rule files quote the phrases they ban;
+    # .vale.ini carves both out of Vale, and Harper has no equivalent
+    # carve-out, so drop them from the list here.
     case "$staged" in
-    words/*.txt | */words/*.txt | *accept.txt | *reject.txt | *dictionary.txt)
+    words/*.txt | */words/*.txt | *accept.txt | *reject.txt | *dictionary.txt | \
+        styles/*/*.yml | */styles/*/*.yml)
         continue
         ;;
     esac
