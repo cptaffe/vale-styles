@@ -1,0 +1,11 @@
+- name: excess word fires
+  about: "'underscores the' is a Kobak et al. marker word"
+  rule: ExcessWords.yml
+  input: This result underscores the importance of testing.
+  contains: 'AIWriting.ExcessWords'
+
+- name: proper noun stays quiet
+  about: the character named Underscore, not the verb form
+  rule: ExcessWords.yml
+  input: The character named Underscore appeared in the comic strip.
+  want: ''

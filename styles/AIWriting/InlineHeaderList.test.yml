@@ -1,0 +1,11 @@
+- name: bold-run-in list item fires
+  about: the rule's own header example
+  rule: InlineHeaderList.yml
+  input: "- **Performance**: the system is fast"
+  contains: 'AIWriting.InlineHeaderList'
+
+- name: bold word inside a sentence stays quiet
+  about: bold text mid-sentence is not a list item
+  rule: InlineHeaderList.yml
+  input: The **performance** of the system is fast, as the benchmarks show.
+  want: ''

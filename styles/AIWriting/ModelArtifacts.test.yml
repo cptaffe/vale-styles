@@ -1,0 +1,11 @@
+- name: leaked citation marker fires
+  about: a raw ChatGPT-style citation token
+  rule: ModelArtifacts.yml
+  input: "See the citation marker [cite: 12] in the draft."
+  contains: 'AIWriting.ModelArtifacts'
+
+- name: parenthetical citation stays quiet
+  about: no brackets, so it is not the leaked markup shape
+  rule: ModelArtifacts.yml
+  input: "See the citation marker (cite 12) in the draft."
+  want: ''

@@ -1,0 +1,11 @@
+- name: participle tail fires
+  about: a comma-plus-participle clause bolted on for effect
+  rule: ParticipleTail.yml
+  input: The team shipped the fix early, highlighting their commitment to quality.
+  contains: 'AIWriting.ParticipleTail'
+
+- name: past-tense clause stays quiet
+  about: "'highlighted' is not the comma-plus-participle shape"
+  rule: ParticipleTail.yml
+  input: The fix shipped early, and it was highlighted in the release notes.
+  want: ''

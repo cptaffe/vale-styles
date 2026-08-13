@@ -1,0 +1,11 @@
+- name: participle triad fires
+  about: the rule's own header example
+  rule: RuleOfThree.yml
+  input: The change is streamlining workflows, boosting productivity, and fostering innovation.
+  contains: 'AIWriting.RuleOfThree'
+
+- name: single participle stays quiet
+  about: one -ing phrase and a plain fix are not a triad
+  rule: RuleOfThree.yml
+  input: The team spent the sprint streamlining workflows and fixing three bugs.
+  want: ''

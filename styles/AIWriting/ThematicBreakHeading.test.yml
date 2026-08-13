@@ -1,0 +1,22 @@
+- name: thematic break before a heading fires
+  about: the rule already separates sections; the heading does that job too
+  rule: ThematicBreakHeading.yml
+  input: |
+    Intro paragraph.
+
+    ---
+    ## Next Section
+  contains: 'AIWriting.ThematicBreakHeading'
+
+- name: break followed by prose stays quiet
+  about: a paragraph sits between the break and the heading
+  rule: ThematicBreakHeading.yml
+  input: |
+    Intro paragraph.
+
+    ---
+
+    Some more text.
+
+    ## Next Section
+  want: ''

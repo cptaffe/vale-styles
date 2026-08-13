@@ -1,0 +1,11 @@
+- name: tour-guide framing fires
+  about: "'let's dive' frames the document as a guided tour"
+  rule: Didactic.yml
+  input: "Let's dive into the architecture before we start coding."
+  contains: 'AIWriting.Didactic'
+
+- name: past-tense recap stays quiet
+  about: "'dove' is not 'dive'; states content instead of touring it"
+  rule: Didactic.yml
+  input: We already dove into the architecture last week and shipped the change.
+  want: ''

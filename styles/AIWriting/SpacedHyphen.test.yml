@@ -1,0 +1,11 @@
+- name: spaced hyphen fires
+  about: the rule's own header example
+  rule: SpacedHyphen.yml
+  input: "The dev stack - which holds real SSO cookies - becomes reachable."
+  contains: 'AIWriting.SpacedHyphen'
+
+- name: em dash stays quiet
+  about: the fixed form the rule asks for
+  rule: SpacedHyphen.yml
+  input: "The dev stack—which holds real SSO cookies—becomes reachable."
+  want: ''

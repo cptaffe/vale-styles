@@ -1,0 +1,11 @@
+- name: verbless count contrast fires
+  about: the rule's own header example
+  rule: CountContrast.yml
+  input: Three stock images over one shared workspace.
+  contains: 'AIWriting.CountContrast'
+
+- name: count-over-count mid-sentence stays quiet
+  about: not anchored at sentence start, so ordinary prose is legal
+  rule: CountContrast.yml
+  input: You can spread the three values over one line to keep the diff small.
+  want: ''

@@ -1,0 +1,11 @@
+- name: vague attribution fires
+  about: "'experts agree' attributes a claim to nobody"
+  rule: VagueAttribution.yml
+  input: Experts agree that the migration reduced latency significantly.
+  contains: 'AIWriting.VagueAttribution'
+
+- name: named source stays quiet
+  about: the claim is attributed to a real, named team
+  rule: VagueAttribution.yml
+  input: The engineering team agrees that the migration reduced latency significantly.
+  want: ''

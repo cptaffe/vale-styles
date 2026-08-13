@@ -1,0 +1,11 @@
+- name: recap opener fires
+  about: "'in conclusion,' recaps what the section already said"
+  rule: SectionSummary.yml
+  input: In conclusion, the migration finished on schedule.
+  contains: 'AIWriting.SectionSummary'
+
+- name: conclusion without a comma stays quiet
+  about: the token needs the trailing comma to be the recap shape
+  rule: SectionSummary.yml
+  input: In conclusion he found the results promising.
+  want: ''

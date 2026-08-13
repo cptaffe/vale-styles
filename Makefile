@@ -2,7 +2,7 @@ STYLES := AIWriting Grammar STE
 ZIPS := $(STYLES:%=dist/%.zip)
 VALE_DIR := $(HOME)/Library/Application Support/vale
 
-all: $(ZIPS)
+all: $(ZIPS) test
 
 # Render the config template and install it. rm first: the target may be a
 # symlink from the pre-template layout, and > would write through it into
@@ -17,7 +17,12 @@ dist/%.zip: styles/%/*.yml styles/%/meta.json
 	rm -f $@
 	cd styles && zip -qr ../$@ $(@F:.zip=) -x '*.DS_Store'
 
+# Runs each rule's fixtures in isolation, so it needs no built zip and no
+# installed config: a rule and its .test.yml are read straight from styles/.
+test:
+	vale test styles
+
 clean:
 	rm -rf dist
 
-.PHONY: all clean config
+.PHONY: all clean config test

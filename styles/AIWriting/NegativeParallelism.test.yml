@@ -1,0 +1,11 @@
+- name: negative parallelism fires
+  about: "'not just X, it's Y' defines a thing against what it isn't"
+  rule: NegativeParallelism.yml
+  input: "It's not just a bug fix, it's a redesign of the whole pipeline."
+  contains: 'AIWriting.NegativeParallelism'
+
+- name: plain contrast stays quiet
+  about: no 'not just/only/merely' before the contrast
+  rule: NegativeParallelism.yml
+  input: "It's not a bug fix, but a documentation update noted in the changelog."
+  want: ''
