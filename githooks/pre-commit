@@ -49,6 +49,13 @@ done
 set --
 while IFS= read -r staged; do
     [ -f "$staged" ] || continue
+    # Word lists are words, not prose; .vale.ini carves them out of Vale, and
+    # Harper has no equivalent carve-out, so drop them from the list here.
+    case "$staged" in
+    words/*.txt | */words/*.txt | *accept.txt | *reject.txt | *dictionary.txt)
+        continue
+        ;;
+    esac
     case "$staged" in
     *.md | *.txt | *.rst | \
         *.py | *.go | *.js | *.jsx | *.ts | *.tsx | *.rs | *.java | *.kt | \
