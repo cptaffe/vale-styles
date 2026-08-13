@@ -29,6 +29,21 @@ fi
 [ "${VALE_SKIP:-0}" = "1" ] && exit 0
 command -v vale >/dev/null 2>&1 || exit 0
 
+# --- word lists -------------------------------------------------------------
+# The Vale vocabulary and the Harper dictionary render from words/base.txt
+# (committed) and words/local.txt (gitignored) in the repo this hook lives
+# in. Re-render when a source file is newer than the deployed vocabulary, so
+# an edit to either list deploys on the next commit anywhere.
+words_root=$(dirname "$(readlink -f "$0")")/..
+vocab="$HOME/Library/Application Support/vale/styles/config/vocabularies/Technical/accept.txt"
+for w in "$words_root/words/base.txt" "$words_root/words/local.txt"; do
+    [ -f "$w" ] || continue
+    if [ ! -f "$vocab" ] || [ "$w" -nt "$vocab" ]; then
+        "$words_root/bin/words"
+        break
+    fi
+done
+
 # Staged, still present, and a type Vale can read. Vale pulls the comments out
 # of source files, so this covers comments as well as documents.
 set --
@@ -80,7 +95,8 @@ Vale found errors in the staged prose above.
   git commit --no-verify    skip all hooks
 
 Config: ~/Library/Application Support/vale/.vale.ini
-Add technical words to: styles/config/vocabularies/Technical/accept.txt
+Add technical words to: words/base.txt (generic) or words/local.txt
+(private) in the vale-styles repo
 MSG
     exit 1
 fi

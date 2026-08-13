@@ -41,12 +41,24 @@ vocabularies live under `styles/config/vocabularies/`.
   works from the repo and from its deployed path alike.
 - `githooks/pre-commit` — runs Vale over staged prose and blocks on errors;
   chains to a repo's own hook first, and runs Harper as an advisor.
-Two word lists stay out of this repo because they hold employer-specific
-terms: the Vale vocabulary
-(`~/Library/Application Support/vale/styles/config/vocabularies/Technical`,
-named by `Vocab = Technical`) and Harper's dictionary
-(`~/Library/Application Support/harper-ls/dictionary.txt`, seeded from the
-vocabulary). Harper's rule ignore list lives in the hook.
+## Word lists
+
+One source of truth feeds both spellcheckers. `words/base.txt` lives in
+git and holds generic technical terms; `words/local.txt` holds
+employer-specific terms, stays gitignored, and never leaves the machine.
+`bin/words` concatenates the two and renders each consumer's format:
+
+- the Vale vocabulary
+  (`~/Library/Application Support/vale/styles/config/vocabularies/Technical/accept.txt`,
+  named by `Vocab = Technical`), and
+- Harper's dictionary
+  (`~/Library/Application Support/harper-ls/dictionary.txt` — words only,
+  sorted).
+
+The pre-commit hook re-renders whenever a source file is newer than the
+deployed vocabulary, so an edit to either list deploys on the next commit.
+Run `bin/words` to deploy by hand. Harper's rule ignore list lives in the
+hook.
 
 ## Install
 
@@ -58,11 +70,9 @@ mkdir -p "$HOME/.githooks"
 ln -s "$PWD/.vale.ini" "$HOME/Library/Application Support/vale/.vale.ini"
 ln -s "$PWD/githooks/pre-commit" "$HOME/.githooks/pre-commit"
 git config --global core.hooksPath "$HOME/.githooks"
+bin/words
 vale sync
 ```
-
-Then create the two word lists at the paths above, or start with empty
-files.
 
 To change a rule: edit it here, run `make`, then run `vale sync`.
 

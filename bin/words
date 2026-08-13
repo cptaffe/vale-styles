@@ -1,0 +1,32 @@
+#!/bin/sh
+# Render the word list into each consumer's format.
+#
+# The source of truth is two files in this repo's words/ directory:
+#   base.txt   committed; generic technical terms
+#   local.txt  gitignored; employer-specific terms, never committed
+#
+# Outputs, overridable for testing:
+#   VALE_VOCAB_DIR  Vale vocabulary directory; gets accept.txt
+#   HARPER_DICT     Harper user dictionary; words only, sorted, deduped
+#
+# The pre-commit hook runs this whenever a source file is newer than an
+# output, so editing base.txt or local.txt is enough — the next commit
+# anywhere deploys it.
+set -eu
+
+root=$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)
+vocab_dir="${VALE_VOCAB_DIR:-$HOME/Library/Application Support/vale/styles/config/vocabularies/Technical}"
+dict="${HARPER_DICT:-$HOME/Library/Application Support/harper-ls/dictionary.txt}"
+
+src() {
+    cat "$root/words/base.txt"
+    if [ -f "$root/words/local.txt" ]; then
+        printf '\n'
+        cat "$root/words/local.txt"
+    fi
+}
+
+mkdir -p "$vocab_dir" "$(dirname "$dict")"
+src > "$vocab_dir/accept.txt"
+[ -f "$vocab_dir/reject.txt" ] || : > "$vocab_dir/reject.txt"
+src | grep -Ev '^#|^[[:space:]]*$' | sort -u > "$dict"
