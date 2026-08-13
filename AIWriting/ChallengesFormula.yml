@@ -1,0 +1,21 @@
+# "Despite these challenges, the project's future outlook remains bright."
+#
+# Wikipedia:Signs_of_AI_writing "Outline-like conclusions": the model closes
+# with a formulaic challenges-and-future-prospects section — vague obstacles,
+# vaguer optimism, no facts. No installed set covers the formula.
+extends: existence
+message: "'%s' is the stock challenges-and-outlook formula. State specific facts or end sooner."
+level: warning
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+ignorecase: true
+tokens:
+  - 'faces several challenges'
+  - 'despite (?:these|its) challenges'
+  - 'is not without (?:its )?challenges'
+  - 'challenges and opportunities'
+  - 'future outlook'
+  - 'looking ahead'
+  - 'the road ahead'
+  - 'remains to be seen'
+  - 'only time will tell'
+  - 'poised to (?:become|play|continue)'

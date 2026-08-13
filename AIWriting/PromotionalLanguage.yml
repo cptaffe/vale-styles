@@ -1,0 +1,26 @@
+# "nestled in the heart of", "world-class", "seamlessly integrates"
+#
+# Wikipedia:Signs_of_AI_writing "Promotional and advertisement-like
+# language": travel-guide and press-release words applied to any topic.
+# signs-of-ai-writing.Vocabulary covers vibrant/boasts/rich; RedHat's
+# SimpleWords covers state-of-the-art. These are the remainder.
+extends: existence
+message: "'%s' is press-release language. Describe the thing, do not sell it."
+level: warning
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+ignorecase: true
+tokens:
+  - 'nestled'
+  - 'in the heart of'
+  - 'natural beauty'
+  - 'groundbreaking'
+  - 'renowned'
+  - 'world-class'
+  - 'cutting-edge'
+  - 'seamlessly'
+  - 'seamless (?:integration|experience)'
+  - 'diverse array'
+  - 'wide array'
+  - 'commitment to (?:excellence|innovation|quality)'
+  - 'hidden gem'
+  - 'must-visit'

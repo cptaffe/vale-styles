@@ -1,0 +1,18 @@
+# A horizontal rule directly before a heading.
+#
+# Wikipedia:Signs_of_AI_writing "Thematic breaks before headings": chatbots
+# insert a rule before each section; the heading already marks the break,
+# so the rule is decoration. Requires a blank line before the break so YAML
+# front matter, whose closing --- sits flush against the content above,
+# stays legal.
+#
+# Raw scope, because parsed scopes drop both the rule and the heading
+# marker.
+extends: existence
+message: "Thematic break before a heading. The heading already separates; delete the rule."
+level: warning
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+scope: raw
+nonword: true
+raw:
+  - '\n\n(?:-{3,}|\*{3,}|_{3,})\n+#{1,6} '

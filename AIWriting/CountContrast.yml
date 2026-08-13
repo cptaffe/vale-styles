@@ -1,0 +1,17 @@
+# "Three stock images over one shared workspace: ..." / "Two panes, one door."
+#
+# The verbless headline fragment that pairs a count against 'one': it reads
+# as a slogan, not a sentence. A person writing plainly gives it a verb —
+# "three stock images share a workspace". Anchored to the start of a
+# sentence so ordinary prose like "spread the three values over one line"
+# stays quiet; the comma form only fires when the pair is the whole
+# sentence.
+#
+# NOTE: Vale CONCATENATES multiple `raw:` entries into a single pattern
+# rather than alternating them. Keep every alternative inside one entry.
+extends: existence
+message: "Slogan fragment ('%s') is an LLM tell. Write a sentence with a verb."
+level: warning
+nonword: true
+raw:
+  - '(?m)(?:^|[.!?:] +)(?:One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten|\d+) (?:(?:[\w-]+ ){1,3}(?:over|across|behind|atop|against) (?:one|a single)(?: [\w-]+){1,2}(?:[.!?:]|$)|(?:[\w-]+ ){0,2}[\w-]+, (?:one|zero|no) [\w-]+(?:[.!?]|$))'

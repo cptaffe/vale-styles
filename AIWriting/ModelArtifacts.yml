@@ -1,0 +1,27 @@
+# Raw markup that chatbots leak into copied text. The signs-of-ai-writing
+# package covers the common ChatGPT forms (oaicite, contentReference,
+# sandbox:/mnt/data). This rule adds the artifacts it misses, from
+# Wikipedia:Signs_of_AI_writing "Internal formatting and reference markup
+# bugs": Gemini, Grok, Perplexity, and newer ChatGPT citation tokens.
+#
+# These strings have no legitimate use in prose, so the rule is an error.
+extends: existence
+message: "'%s' is leaked chatbot markup. Remove it."
+level: error
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+nonword: true
+tokens:
+  - '\[cite: ?\d+\]'
+  - '\[cite_start\]'
+  - '\[span_\d+\]'
+  - '\(start_span\)'
+  - '\(end_span\)'
+  - 'grok_render_citation_card_json'
+  - 'grok_card'
+  - 'ppl-ai-file-upload'
+  - 'attached_file:'
+  - ':::writing'
+  - 'turn\d+search\d+'
+  - 'turn\d+news\d+'
+  - 'citeturn'
+  - 'attributableIndex'

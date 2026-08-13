@@ -1,0 +1,19 @@
+# "In conclusion, ..." / "In summary, ..."
+#
+# Wikipedia:Signs_of_AI_writing "Section summaries": the model recaps what
+# it just said. A short document does not need a recap; a long one needs a
+# better structure, not a summary paragraph bolted on.
+extends: existence
+message: "'%s' opens a recap. Cut the recap; the section already said it."
+level: suggestion
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+ignorecase: true
+# nonword with explicit \b, because Vale's implicit word boundary never
+# matches after a trailing comma and the rule would silently match nothing.
+nonword: true
+tokens:
+  - '\bin summary,'
+  - '\bin conclusion,'
+  - '\bto summarize,'
+  - '\bto sum up,'
+  - '\ball in all,'

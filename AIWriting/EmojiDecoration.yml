@@ -1,0 +1,17 @@
+# Emoji doing structural work: bulleting a list, decorating a heading.
+#
+# Wikipedia:Signs_of_AI_writing "Emoji": chatbots decorate headings and
+# list items with emoji; people writing engineering prose rarely do. The
+# rule fires only on an emoji at the start of a heading or list item, so
+# an emoji used inside a sentence stays legal.
+#
+# Raw scope, because the heading and bullet markers are gone from parsed
+# scopes.
+extends: existence
+message: "Emoji used as formatting. Delete it; the marker already does the job."
+level: warning
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+scope: raw
+nonword: true
+raw:
+  - '(?m)^\s*(?:#{1,6}|[-*+]|\d+\.)\s+[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}\x{2B00}-\x{2BFF}\x{2705}\x{274C}\x{2728}]'

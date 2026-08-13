@@ -1,0 +1,15 @@
+# ASD-STE100 caps a procedural sentence at 20 words and a descriptive one at
+# 25. No published Vale package implements STE, so this is the one rule worth
+# hand-writing: it is the constraint that does most of the work, and the rest
+# of STE (a controlled vocabulary of roughly 900 approved words) is not
+# practical to enforce on engineering prose.
+#
+# 25, not 20, because these are descriptive documents rather than procedures.
+# Microsoft's equivalent rule allows 30 and RedHat averages 32 — both looser
+# than STE asks for.
+extends: occurrence
+message: "Sentence runs past 25 words. ASD-STE100 wants shorter; split it."
+level: suggestion
+scope: sentence
+token: '\b\w+\b'
+max: 25

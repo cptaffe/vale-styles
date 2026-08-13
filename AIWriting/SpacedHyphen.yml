@@ -1,0 +1,11 @@
+# "the dev stack - which holds real SSO cookies - becomes reachable"
+#
+# A spaced hyphen doing an em dash's job — either a typo or a generator's
+# em-dash-avoidance artifact. Number ranges written "5 - 10" are wrong in
+# prose too, so they are not carved out.
+extends: existence
+message: "Spaced hyphen ('%s') used as a dash. Use an em dash (—) or rewrite."
+level: error
+nonword: true
+raw:
+  - '[\w)"''] - [\w("'']'

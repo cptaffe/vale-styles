@@ -1,0 +1,17 @@
+# "- **Performance**: the system is fast"
+#
+# Wikipedia:Signs_of_AI_writing "Inline-header vertical lists": the
+# bold-run-in list is the default chatbot answer shape. It has honest uses,
+# and a document with one or two is fine — a document that is nothing else
+# reads as generated. Suggestion, so it shows on demand without nagging.
+#
+# Raw scope, because parsed scopes drop the bullet marker and the bold
+# markup.
+extends: existence
+message: "Bold-run-in list item. If every item has one, write prose or a real heading."
+level: suggestion
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+scope: raw
+nonword: true
+raw:
+  - '(?m)^\s*(?:[-*+]|\d+\.)\s+\*\*[^*\n]+\*\*:'

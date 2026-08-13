@@ -1,0 +1,16 @@
+# "It's not just X — it's Y."
+#
+# The signs-of-ai-writing package does not cover this one, and it is the most
+# recognisable LLM sentence shape there is: define a thing against what it
+# isn't, which reads as emphasis while saying nothing. Say what it is.
+#
+# NOTE: Vale CONCATENATES multiple `raw:` entries into a single pattern rather
+# than alternating them. Keep every alternative inside one entry, or the rule
+# compiles to something impossible and silently matches nothing.
+extends: existence
+message: "Negative parallelism ('%s') is an LLM tell. Say what it is, once."
+level: warning
+ignorecase: true
+nonword: true
+raw:
+  - "(not (just|only|merely|simply) .{2,60}[-—,]+ *(but|it's|it is|they're|that's)|isn't (just|only|merely) .{2,60}[-—,]+ *it's|no [a-z]+, no [a-z]+, just )"

@@ -1,0 +1,23 @@
+# "Experts argue...", "Industry reports suggest...", "Observers have noted..."
+#
+# Wikipedia:Signs_of_AI_writing "Vague attributions": the model presents an
+# opinion as widely held without naming who holds it. write-good.Weasel
+# catches single weasel words; none of the installed sets catch these
+# attribution phrases.
+#
+# The fix is to name the source or drop the claim.
+extends: existence
+message: "'%s' attributes a claim to nobody. Name the source or drop the claim."
+level: warning
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+ignorecase: true
+tokens:
+  - 'experts (?:argue|agree|believe|suggest|say|note)'
+  - 'observers (?:have )?(?:cited|noted|argued|said)'
+  - '(?:some )?critics (?:argue|have noted|point out|say)'
+  - 'industry reports'
+  - 'analysts (?:say|believe|argue|suggest)'
+  - 'commentators have'
+  - 'it is widely (?:believed|regarded|considered|accepted)'
+  - 'many (?:believe|argue|consider) that'
+  - 'some (?:argue|say|believe) that'

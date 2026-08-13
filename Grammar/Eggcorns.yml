@@ -1,0 +1,20 @@
+# Misheard idioms. Like ModalOf, these are pure substitution and so port
+# cleanly from a grammar checker into Vale.
+extends: substitution
+message: "Use '%s' rather than '%s'."
+level: error
+ignorecase: true
+swap:
+  for all intensive purposes: for all intents and purposes
+  could care less: couldn't care less
+  deep seeded: deep-seated
+  deep-seeded: deep-seated
+  case and point: case in point
+  peaked my interest: piqued my interest
+  peaked her interest: piqued her interest
+  peaked their interest: piqued their interest
+  irregardless: regardless
+  should probably of: should probably have
+  on accident: by accident
+  statistically significant amount of: statistically significant number of
+  begs the question that: raises the question whether

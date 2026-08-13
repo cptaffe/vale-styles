@@ -1,0 +1,21 @@
+# "Let's dive into...", "In this article, we'll explore..."
+#
+# Wikipedia:Signs_of_AI_writing "Collaborative communication" and the
+# historical "didactic disclaimers": the model frames a document as a
+# guided tour. signs-of-ai-writing.ChatbotCommunication catches direct
+# chat replies; this catches the blog-tutorial framing.
+extends: existence
+message: "'%s' frames the document as a tour. State the content; skip the tour guide."
+level: suggestion
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+ignorecase: true
+tokens:
+  - "let's dive"
+  - "let's explore"
+  - "let's take a (?:closer )?look"
+  - 'in this article'
+  - 'in this post'
+  - 'in this section, we'
+  - "we'll (?:explore|cover|examine|walk through)"
+  - 'without further ado'
+  - 'buckle up'

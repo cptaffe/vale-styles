@@ -1,0 +1,19 @@
+# "..., highlighting the team's commitment to quality."
+#
+# Wikipedia:Signs_of_AI_writing "Superficial analyses": the model bolts a
+# present-participle clause onto a plain statement to manufacture
+# significance. The clause carries an unattributed opinion; cutting it
+# loses nothing.
+#
+# signs-of-ai-writing.Symbolism catches some of these verbs in other
+# shapes; this rule targets the comma-plus-participle tail itself. The list
+# holds only editorial participles — working ones like "ensuring" and
+# "demonstrating" stay legal because comments and docs use them literally.
+extends: existence
+message: "Participle tail ('%s') adds editorial gloss. Cut it or state the fact plainly."
+level: warning
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+ignorecase: true
+nonword: true
+raw:
+  - ',\s+(?:highlighting|underscoring|emphasizing|reflecting|showcasing|signaling|symbolizing|reinforcing|solidifying|cementing|paving the way for|setting the stage for|marking a)\b'

@@ -1,0 +1,22 @@
+# Do not describe a gap by naming the person who did not close it. "Two things
+# nobody has built" makes the reader look for the culprit; "two things, not yet
+# built" states the condition, which is the fact they need.
+#
+# This is Orwell's rule 3 (cut the word that carries nothing) meeting STE's
+# preference for a plain statement of state. It also ages better: "nobody has
+# built it" reads as an accusation a year later, when the reason has been
+# forgotten and the people have moved on.
+#
+# Deliberately narrow. The tokens below are the phrasings that name an absent
+# actor and nothing else; a broad "nobody \w+" would fire on sentences that
+# genuinely talk about people.
+extends: existence
+message: "'%s' names an absent actor. State the condition instead — 'not yet built'."
+level: warning
+ignorecase: true
+tokens:
+  - 'nobody (?:has |had |ever )*(?:built|written|shipped|done|fixed|finished)'
+  - 'no ?one (?:has |had |ever )*(?:built|written|shipped|done|fixed|finished)'
+  - 'never got a?round to'
+  - 'someone (?:should|needs to|ought to|will have to)'
+  - 'we never (?:built|wrote|shipped|finished)'

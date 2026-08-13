@@ -1,0 +1,18 @@
+# "should of" for "should have". Harper catches this and Vale did not.
+#
+# This is the portable half of Harper: a fixed substitution needing no parse.
+# Harper's genuinely grammatical rules — subject-verb agreement, morphology,
+# missing prepositions — cannot come across, because they need POS tagging and
+# a dictionary with affixes. Vale matches patterns; Harper parses sentences.
+extends: substitution
+message: "Use '%s' rather than '%s' — 'of' is a mishearing of the contraction."
+level: error
+ignorecase: true
+swap:
+  should of: should have
+  could of: could have
+  would of: would have
+  must of: must have
+  might of: might have
+  may of: may have
+  shall of: shall have

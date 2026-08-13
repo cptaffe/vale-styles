@@ -1,0 +1,53 @@
+# The second tier: words that are legitimate often enough to keep at
+# suggestion, but that a model reaches for far more than a person does.
+#
+# Includes this assistant's own tells — "honest", "genuinely", "seam" — which
+# is why the list exists at all. Density is the signal: one is nothing, six in
+# a paragraph means the paragraph was generated.
+extends: existence
+message: "'%s' is a filler word LLMs lean on. Is it earning its place?"
+level: suggestion
+ignorecase: true
+tokens:
+  - honestly
+  - to be honest
+  - genuinely
+  - truly
+  - certainly
+  - crucially
+  - importantly
+  - notably
+  - fundamentally
+  - essentially
+  - ultimately
+  - arguably
+  - the reality is
+  - crucial
+  - vital
+  - pivotal
+  - robust
+  - comprehensive
+  - holistic
+  - leverage
+  - leveraging
+  - foster
+  - fostering
+  - facilitate
+  - utilise
+  - utilize
+  - showcase
+  - showcasing
+  - exemplifies
+  - encompasses
+  - encompassing
+  - align with
+  - resonate with
+  - streamline
+  - streamlined
+  - empower
+  - empowers
+  - deep dive
+  - key takeaway
+  - takeaways
+  - seam
+  - seams

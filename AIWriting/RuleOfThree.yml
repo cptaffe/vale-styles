@@ -1,0 +1,14 @@
+# "streamlining workflows, boosting productivity, and fostering innovation"
+#
+# Wikipedia:Signs_of_AI_writing "Rule of three": the model pads analysis
+# into triads to look comprehensive. A triple of participle phrases is the
+# most recognisable shape and the only one a regex can catch without
+# flagging honest lists, so the rule stops there and stays a suggestion.
+extends: existence
+message: "Participle triad ('%s') is an LLM rhythm. Keep the one item that matters."
+level: suggestion
+link: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
+ignorecase: true
+nonword: true
+raw:
+  - '\b\w+ing(?:\s+[\w-]+){0,3},\s+\w+ing(?:\s+[\w-]+){0,3},\s+and\s+\w+ing\b'
