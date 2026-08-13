@@ -5,14 +5,14 @@ global Vale config and the pre-commit hook that runs it.
 
 ## Styles
 
-- `AIWriting` — signs of AI writing from
+- `AIWriting`—signs of AI writing from
   [Wikipedia:Signs_of_AI_writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
   that the published
   [signs-of-ai-writing](https://github.com/ammil-industries/vale-signs-of-ai-writing)
   package does not catch.
-- `STE` — the part of ASD-STE100 Simplified Technical English a linter can
+- `STE`—the part of ASD-STE100 Simplified Technical English a linter can
   check.
-- `Grammar` — fixed word swaps ported from a grammar checker.
+- `Grammar`—fixed word swaps ported from a grammar checker.
 
 The layout follows
 [vale-boilerplate](https://github.com/errata-ai/vale-boilerplate): each
@@ -37,10 +37,10 @@ vocabularies live under `styles/config/vocabularies/`.
 
 ## Config, hook, and word lists
 
-- `.vale.ini.in` — template for the global Vale config. `make config`
+- `.vale.ini.in`—template for the global Vale config. `make config`
   fills in the home and repo paths and installs the result at
   `~/Library/Application Support/vale/.vale.ini`.
-- `githooks/pre-commit` — runs Vale over staged prose and blocks on errors;
+- `githooks/pre-commit`—runs Vale over staged prose and blocks on errors;
   chains to a repo's own hook first, and runs Harper as an advisor.
 ## Word lists
 
@@ -53,7 +53,7 @@ employer-specific terms, stays gitignored, and never leaves the machine.
   (`~/Library/Application Support/vale/styles/config/vocabularies/Technical/accept.txt`,
   named by `Vocab = Technical`), and
 - Harper's dictionary
-  (`~/Library/Application Support/harper-ls/dictionary.txt` — words only,
+  (`~/Library/Application Support/harper-ls/dictionary.txt`—words only,
   sorted).
 
 The pre-commit hook re-renders whenever a source file is newer than the
@@ -123,5 +123,5 @@ To run Harper as the server instead, set `command` to
 `/opt/homebrew/bin/harper-ls` and `args` to `["--stdio"]`. Do not drop
 the flag: harper-ls listens on TCP by default, Claude Code speaks stdio,
 and without it the server starts but never connects. Both servers want
-`.md`, and only one gets it — here Vale is the server, and Harper advises
+`.md`, and only one gets it—here Vale is the server, and Harper advises
 from the pre-commit hook.

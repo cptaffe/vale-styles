@@ -1,5 +1,5 @@
 # Global Vale config. Vale finds this wherever you run it, unless a repo ships
-# its own .vale.ini — a repo-local file wins, which is what you want for a
+# its own .vale.ini—a repo-local file wins, which is what you want for a
 # project with house rules of its own.
 #
 # This file is generated from .vale.ini.in in the vale-styles repo: `make
@@ -9,7 +9,7 @@
 #
 # The rule set follows the writing guidance in ~/CLAUDE.md: Orwell's six rules
 # and ASD-STE100 Simplified Technical English. write-good and proselint carry
-# most of that — passive voice, weasel words, wordiness, clichés, and the
+# most of that—passive voice, weasel words, wordiness, clichés, and the
 # tired figures of speech Orwell's first rule is about.
 #
 # NOTE ON LAYOUT: this is an INI file, so every setting belongs to the section
@@ -22,7 +22,7 @@ StylesPath = @HOME@/Library/Application Support/vale/styles
 
 # suggestion < warning < error. Set to warning, not suggestion, because the
 # vale-ls language server pushes everything at or above this level into
-# Claude's context on every edit — and a long document generates over a
+# Claude's context on every edit—and a long document generates over a
 # thousand suggestions, which would drown the session.
 #
 # Nothing is lost: `vale --minAlertLevel=suggestion FILE` shows the lot on
@@ -31,7 +31,7 @@ MinAlertLevel = warning
 
 # The last three are the hand-written styles (AIWriting, STE, Grammar). They
 # live in ~/git/github.com/cptaffe/vale-styles and install from local zips:
-# edit there, run `make`, then `vale sync`. Do not edit them under styles/ —
+# edit there, run `make`, then `vale sync`. Do not edit them under styles/—
 # the next sync overwrites them from the zips.
 Packages = proselint, write-good, Readability, alex, Google, Microsoft, RedHat, \
            https://github.com/ammil-industries/vale-signs-of-ai-writing/releases/latest/download/signs-of-ai-writing.zip, \
@@ -58,15 +58,15 @@ BasedOnStyles = Vale, proselint, write-good, alex, Readability, STE, AIWriting, 
 # check: LGBTQ is otherwise silent, which is the profile worth keeping.
 #
 # The GCP product names hide the word "Cloud" from Google.WordList, which
-# wants bare "Cloud" written as GCP — right about "our cloud", wrong about a
+# wants bare "Cloud" written as GCP—right about "our cloud", wrong about a
 # proper noun.
 TokenIgnores = (bi-temporal), (Google Cloud|Cloud (?:Run|SQL|Storage|Logging|Build|Functions))
 
 # --- Orwell, made enforceable ---
 
 # Rule 3: if it is possible to cut a word out, always cut it out.
-# TooWordy works from a fixed word list and does misfire — it calls
-# "validate" and "requirement" wordy — so it advises rather than insists.
+# TooWordy works from a fixed word list and does misfire—it calls
+# "validate" and "requirement" wordy—so it advises rather than insists.
 write-good.TooWordy = warning
 proselint.Very = error
 proselint.Annotations = error
@@ -98,7 +98,7 @@ write-good.E-Prime = NO
 # --- inclusive language ---
 #
 # Measured over apps/byo-agent/docs: Gendered, Race and LGBTQ fired zero times,
-# which is the profile of a check worth having — silent until it matters. The
+# which is the profile of a check worth having—silent until it matters. The
 # rest misfire badly on systems vocabulary, so they stay off:
 #   ProfanityUnlikely  12 hits, all false: dead, execution, failure, crash, kill
 #   Ablist              2 hits, both "disabled" meaning "switched off"
@@ -110,7 +110,7 @@ alex.ProfanityUnlikely = NO
 alex.ProfanityMaybe = NO
 alex.ProfanityLikely = NO
 # Ablist misfires on "disabled" meaning switched off, so it advises rather
-# than warns. The other four fired zero times on the corpus — silent until
+# than warns. The other four fired zero times on the corpus—silent until
 # they matter, which is exactly when you want them on.
 alex.Ablist = suggestion
 alex.Condescending = suggestion
@@ -121,7 +121,7 @@ alex.OCD = suggestion
 # --- noise control ---
 
 # Vale.Spelling flags every technical term. The Technical vocab (accept.txt)
-# is the place to add them, not a blanket disable — a spellcheck you switch
+# is the place to add them, not a blanket disable—a spellcheck you switch
 # off catches nothing.
 Vale.Spelling = warning
 
@@ -132,7 +132,7 @@ Vale.Repetition = error
 # nothing at suggestion and catches genuine drift like 'Javascript'.
 Vale.Terms = suggestion
 
-# '2x2' really should be '2×2' — these are dimensions in prose, not code.
+# '2x2' really should be '2×2'—these are dimensions in prose, not code.
 # Held at warning rather than error only because the ~18 existing instances
 # live in infographic prompt-reference docs; promote it once those are fixed.
 proselint.Typography = warning
@@ -144,12 +144,13 @@ proselint.Spelling = NO
 # Enabled broadly, with the overlaps resolved. Left alone they triple-report
 # the same sentence, and two of them contradict each other outright.
 
-# Dashes, all three off, deliberately. RedHat.EmDash bans em dashes outright.
-# Google.EmDash and Microsoft.Dashes are the same rule as each other and object
-# only to the SPACES around one — which is how they get written here on
-# purpose. 181 alerts arguing with a deliberate voice choice is how a linter
-# teaches you to ignore it.
-Microsoft.Dashes = NO
+# Dashes. The convention: em dashes yes, spaces around them no. An earlier
+# version of this file defended spaced em dashes as "a deliberate voice
+# choice"—the author of that comment was the model whose tell it is.
+# Microsoft.Dashes is the keeper: it catches one-sided spaces where
+# Google.EmDash needs both sides. RedHat.EmDash bans the em dash itself,
+# which is not the convention.
+Microsoft.Dashes = error
 Google.EmDash = NO
 RedHat.EmDash = NO
 
@@ -173,7 +174,7 @@ RedHat.Contractions = suggestion
 RedHat.Spelling = NO
 
 # Acronyms: three rules all asking for a definition on first use. Keep one,
-# and only as a suggestion — internal notes can assume API, GKE and CAC.
+# and only as a suggestion—internal notes can assume API, GKE and CAC.
 Microsoft.Acronyms = suggestion
 Google.Acronyms = NO
 RedHat.Definitions = NO
@@ -189,7 +190,7 @@ Microsoft.Terms = warning
 Google.WordListCase = warning
 RedHat.TermsSuggestions = suggestion
 
-# House style on punctuation and voice — real opinions, worth seeing, never
+# House style on punctuation and voice—real opinions, worth seeing, never
 # worth blocking a commit over.
 Google.Parens = suggestion
 Google.Semicolons = suggestion
@@ -213,7 +214,7 @@ RedHat.Headings = NO
 
 # --- severity: error means "unambiguously wrong", because errors block commits
 #
-# Kept as an error — Orwell's rule 5, no judgement needed:
+# Kept as an error—Orwell's rule 5, no judgement needed:
 #   Google.Latin      e.g. -> for example
 #
 # LyHyphens is right about 'externally-shareable' and 'silently-dropped', but
@@ -221,7 +222,7 @@ RedHat.Headings = NO
 # hyphen is correct. A rule with a known false-positive class cannot block.
 Google.LyHyphens = warning
 #
-# Demoted — right often enough to show, wrong often enough in technical text
+# Demoted—right often enough to show, wrong often enough in technical text
 # that blocking a commit would be rude:
 Microsoft.Auto = warning
 RedHat.TermsErrors = warning
@@ -229,7 +230,7 @@ Microsoft.HeadingColons = suggestion
 Google.Units = suggestion
 Google.Headings = suggestion
 
-# Quoting. Both rules demand American typesetting — punctuation inside the
+# Quoting. Both rules demand American typesetting—punctuation inside the
 # quotes. For a quoted literal that is actively wrong: "422s". moves the period
 # inside a string that does not contain one. Keep one, as a suggestion.
 Google.Quotes = suggestion
@@ -249,7 +250,7 @@ signs-of-ai-writing.Vocabulary = warning
 signs-of-ai-writing.Symbolism = warning
 signs-of-ai-writing.Narrative = warning
 
-# Left at the package's own levels — its error tier is unambiguous artifacts
+# Left at the package's own levels—its error tier is unambiguous artifacts
 # ("As an AI language model", :contentReference markers, unfilled placeholders)
 # and those SHOULD block a commit. The rest stay suggestions because, as the
 # author says, the patterns appear in ordinary formal writing too.
@@ -299,7 +300,7 @@ proselint.Spelling = NO
 
 # Spellcheck is off for comments, and that is a measured decision rather than
 # laziness: over 105 backend files it produced 555 warnings, and nearly all
-# were identifiers the comment is naming — noqa, bool, ask_user, thread_id,
+# were identifiers the comment is naming—noqa, bool, ask_user, thread_id,
 # viewBox. TokenIgnores does not reliably strip them inside comment scopes.
 # A comment that names the code around it is doing its job. Prose keeps
 # spellcheck on, where the vocabulary approach works.
@@ -313,10 +314,14 @@ STE.SentenceLength = NO
 
 # Imperative mood for doc comments, PEP 257 style. STE is not in this
 # section's BasedOnStyles, but a named rule in a section with a non-empty
-# BasedOnStyles runs anyway — the same mechanism that enables
+# BasedOnStyles runs anyway—the same mechanism that enables
 # proselint.Cliches above.
 STE.ImperativeOpeners = warning
 STE.BuriedInstruction = warning
+
+# Em dashes without spaces, same as prose; warning here because a comment
+# dash blocking a commit in a legacy file would be rude.
+Microsoft.Dashes = warning
 
 # Terminology drift matters in comments too; the rest of the house guides are
 # written for paragraphs and only produce noise on fragments.
@@ -327,7 +332,7 @@ Google.WordListCase = suggestion
 # Vale rule files
 #
 # The source-comments glob above now covers yml, which pulls in the rule
-# files themselves — and a rule file quotes the phrases it bans, so
+# files themselves—and a rule file quotes the phrases it bans, so
 # Grammar.ModalOf flags its own swap table and Eggcorns flags its own
 # catalog. Rule files are patterns, not prose; exempt them wholesale. The
 # glob matches both this repo's styles/ and the deployed StylesPath.
@@ -346,8 +351,8 @@ BasedOnStyles =
 #
 # Rule inventories: tables of rule names and pattern examples. The word-length
 # metrics read CamelCase rule names as very long words, so the file-level
-# readability scores misfire. Inline vale-off comments cannot silence them —
-# metric rules score the whole document — so the carve-out lives here.
+# readability scores misfire. Inline vale-off comments cannot silence them—
+# metric rules score the whole document—so the carve-out lives here.
 # =============================================================================
 [**/styles/*/README.md]
 Readability.FleschKincaid = NO
@@ -356,7 +361,7 @@ Readability.FleschReadingEase = NO
 # =============================================================================
 # Word lists
 #
-# Lists of words, one per line — the prose glob above would lint them as
+# Lists of words, one per line—the prose glob above would lint them as
 # prose. The sources are words/base.txt (committed) and words/local.txt
 # (gitignored, employer-specific); bin/words renders them into the Vale
 # vocabulary and the Harper dictionary, and the pre-commit hook re-renders

@@ -14,7 +14,7 @@ output.
 | `ChallengesFormula` | warning | `Despite these challenges`, `future outlook` |
 | `CountContrast` | warning | `Two panes, one door` slogan fragments |
 | `EmojiDecoration` | warning | Emoji as a bullet or heading ornament |
-| `NegativeParallelism` | warning | `It's not just X — it's Y` |
+| `NegativeParallelism` | warning | `It's not just X—it's Y` |
 | `ParticipleTail` | warning | `, highlighting the team's commitment...` |
 | `PromotionalLanguage` | warning | `nestled`, `world-class`, `seamlessly` |
 | `ThematicBreakHeading` | warning | A horizontal rule directly before a heading |
