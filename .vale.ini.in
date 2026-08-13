@@ -33,7 +33,7 @@ MinAlertLevel = warning
 # live in ~/git/github.com/cptaffe/vale-styles and install from local zips:
 # edit there, run `make`, then `vale sync`. Do not edit them under styles/—
 # the next sync overwrites them from the zips.
-Packages = proselint, write-good, Readability, alex, Google, Microsoft, RedHat, \
+Packages = proselint, write-good, Readability, Google, Microsoft, RedHat, \
            https://github.com/ammil-industries/vale-signs-of-ai-writing/releases/latest/download/signs-of-ai-writing.zip, \
            @REPO@/dist/AIWriting.zip, \
            @REPO@/dist/STE.zip, \
@@ -50,17 +50,12 @@ example = env
 # Prose
 # =============================================================================
 [*.{md,txt,rst}]
-BasedOnStyles = Vale, proselint, write-good, alex, Readability, STE, AIWriting, Grammar, signs-of-ai-writing, Google, Microsoft, RedHat
+BasedOnStyles = Vale, proselint, write-good, Readability, STE, AIWriting, Grammar, signs-of-ai-writing, Google, Microsoft, RedHat
 
-# alex.LGBTQ reads the "bi" in "bi-temporal" as the slur-adjacent short form of
-# "bisexual". The term is the standard name for a store with both a valid-time
-# and a transaction-time axis, so ignore the one token rather than drop the
-# check: LGBTQ is otherwise silent, which is the profile worth keeping.
-#
 # The GCP product names hide the word "Cloud" from Google.WordList, which
 # wants bare "Cloud" written as GCP—right about "our cloud", wrong about a
 # proper noun.
-TokenIgnores = (bi-temporal), (Google Cloud|Cloud (?:Run|SQL|Storage|Logging|Build|Functions))
+TokenIgnores = (Google Cloud|Cloud (?:Run|SQL|Storage|Logging|Build|Functions))
 
 # --- Orwell, made enforceable ---
 
@@ -80,7 +75,9 @@ proselint.Cliches = error
 
 # Rule 5: no jargon where an everyday word exists.
 proselint.Jargon = warning
-proselint.Corporate = warning
+# The rule's name is CorporateSpeak; 'Corporate' was a dead key that let it
+# run at its packaged error.
+proselint.CorporateSpeak = warning
 
 # "There is a X that..." buries the subject. Good advice, but a nudge rather
 # than a defect, so it must not block a commit.
@@ -91,32 +88,30 @@ write-good.Weasel = warning
 write-good.Illusions = error
 write-good.So = suggestion
 
-# E-Prime bans the verb "to be" outright. That is a fringe doctrine, not
-# Orwell, and in technical writing it fires on nearly every sentence.
-write-good.E-Prime = NO
+# E-Prime bans the verb "to be" outright. Measured: 395 of 2,222 alerts on
+# a 38-file corpus—17% of everything, nearly all on correct sentences.
+# Suggestion keeps it out of diagnostics; --minAlertLevel=suggestion shows
+# it on request.
+write-good.E-Prime = suggestion
 
 # --- inclusive language ---
 #
-# Measured over apps/byo-agent/docs: Gendered, Race and LGBTQ fired zero times,
-# which is the profile of a check worth having—silent until it matters. The
-# rest misfire badly on systems vocabulary, so they stay off:
-#   ProfanityUnlikely  12 hits, all false: dead, execution, failure, crash, kill
-#   Ablist              2 hits, both "disabled" meaning "switched off"
-#   ProfanityLikely     1 hit,  "premature" as in premature abstraction
-alex.Gendered = warning
-alex.Race = error
-alex.LGBTQ = warning
-alex.ProfanityUnlikely = NO
-alex.ProfanityMaybe = NO
-alex.ProfanityLikely = NO
-# Ablist misfires on "disabled" meaning switched off, so it advises rather
-# than warns. The other four fired zero times on the corpus—silent until
-# they matter, which is exactly when you want them on.
-alex.Ablist = suggestion
-alex.Condescending = suggestion
-alex.Suicide = suggestion
-alex.Press = suggestion
-alex.OCD = suggestion
+# One implementation, per the dedup policy: RedHat.ConsciousLanguage. Its
+# term list (master/slave, whitelist/blacklist, sanity-check) is the
+# vocabulary that actually appears in systems docs, and it measured quiet
+# on ours—the silent-until-it-matters profile. The alex package is gone
+# entirely (2026-08): its armed rules (Gendered, Race, LGBTQ) fired zero
+# times across two corpora; its Profanity family measured 13 of 13 false
+# (dead, execution, kill, crash, premature); its LGBTQ rule needed a
+# carve-out for "bi-temporal". The Gender/GenderBias copies in Google,
+# Microsoft, and proselint duplicate the keeper.
+RedHat.ConsciousLanguage = warning
+Google.Gender = NO
+Google.GenderBias = NO
+Microsoft.Gender = NO
+Microsoft.GenderBias = NO
+Microsoft.BiasFree = NO
+proselint.GenderBias = NO
 
 # --- noise control ---
 
@@ -128,14 +123,16 @@ Vale.Spelling = warning
 # Repetition catches real duplicates ("the the") and is worth keeping loud.
 Vale.Repetition = error
 
-# Terms enforces capitalisation of branded names. Opinionated, but it costs
-# nothing at suggestion and catches genuine drift like 'Javascript'.
+# Terms enforces capitalisation of branded names. Suggestion, permanently:
+# promotion was measured and failed. The vocabulary mixes cases (agent,
+# Markdown, HTTPS), so Terms fights ordinary prose—1,738 corpus hits,
+# mostly case-noise on 'Agent', 'https', 'markdown'.
 Vale.Terms = suggestion
 
 # '2x2' really should be '2×2'—these are dimensions in prose, not code.
-# Held at warning rather than error only because the ~18 existing instances
-# live in infographic prompt-reference docs; promote it once those are fixed.
-proselint.Typography = warning
+# Error, as promised once the infographic reference docs were fixed; they
+# were (27 instances across 6 files, 2026-08).
+proselint.Typography = error
 proselint.Spelling = NO
 
 
@@ -192,7 +189,6 @@ RedHat.TermsSuggestions = suggestion
 
 # House style on punctuation and voice—real opinions, worth seeing, never
 # worth blocking a commit over.
-Google.Parens = suggestion
 Google.Semicolons = suggestion
 Microsoft.Semicolon = NO
 Google.We = suggestion
@@ -237,6 +233,85 @@ Google.Quotes = suggestion
 Microsoft.Quotes = NO
 
 
+# --- uncurated defaults, measured and decided (2026-08) ---------------------
+#
+# 103 package rules never appeared in this file and ran at whatever level
+# their authors chose. Measured over a 280-file docs corpus; the offenders
+# get keys, the quiet rest keep their defaults.
+
+# Fires on "Label: Sentence" list items, standard in README-style docs
+# (803 hits, near-all false).
+Google.Colons = NO
+# Docs legitimately describe future behavior (411 hits).
+Google.Will = NO
+# "Use parentheses judiciously"—2,342 hits, the largest single source, and
+# not actionable at any volume.
+Google.Parens = NO
+# Flags "roughly" and friends. Advice, not defect.
+Microsoft.Adverbs = suggestion
+# Substitution nags with unvetted false-positive character.
+RedHat.TermsWarnings = suggestion
+RedHat.CaseSensitiveTerms = suggestion
+RedHat.Using = suggestion
+
+# Error means "blocks a commit". These two earn it: mechanical and
+# false-positive-free by construction.
+RedHat.MergeConflictMarkers = error
+RedHat.SessionId = error
+
+# The rest of the packaged errors demote to warning—plausible rules whose
+# false-positive character nobody has measured, and an unmeasured rule does
+# not gate. Duplicates dedupe to one keeper first.
+Google.Spacing = warning
+Microsoft.Spacing = NO
+RedHat.Spacing = NO
+Microsoft.AMPM = warning
+Google.AMPM = NO
+Microsoft.DateFormat = warning
+Google.DateFormat = NO
+Microsoft.Ordinal = warning
+Google.Ordinal = NO
+Google.Exclamation = warning
+Microsoft.ExclamationPoints = NO
+Google.OxfordComma = warning
+Microsoft.OxfordComma = NO
+RedHat.OxfordComma = NO
+Google.HeadingPunctuation = warning
+Microsoft.HeadingPunctuation = NO
+RedHat.HeadingPunctuation = NO
+Microsoft.FirstPerson = warning
+Google.FirstPerson = NO
+Microsoft.DateNumbers = warning
+Microsoft.DateOrder = warning
+Microsoft.Negative = warning
+Microsoft.Percentages = warning
+Microsoft.Plurals = warning
+Microsoft.RangeTime = warning
+Microsoft.Units = warning
+Google.OptionalPlurals = warning
+Google.Periods = warning
+Google.Slang = warning
+RedHat.Abbreviations = warning
+proselint.Airlinese = warning
+proselint.AnimalLabels = warning
+proselint.Apologizing = warning
+proselint.Archaisms = warning
+proselint.But = warning
+proselint.Cursing = warning
+proselint.DateCase = warning
+proselint.DateMidnight = warning
+proselint.DateRedundancy = warning
+proselint.DateSpacing = warning
+proselint.Diacritical = warning
+proselint.Hyperbole = warning
+proselint.Malapropisms = warning
+proselint.Nonwords = warning
+proselint.Oxymorons = warning
+proselint.RASSyndrome = warning
+proselint.Skunked = warning
+proselint.Uncomparables = warning
+
+
 # --- signs of AI writing -----------------------------------------------------
 #
 # The published ruleset from ammil-industries, which implements
@@ -272,7 +347,7 @@ Readability.SMOG = NO
 # prose rules fire constantly on lines like "# returns None if absent".
 # =============================================================================
 [{*.{py,go,js,jsx,ts,tsx,rs,java,kt,rb,php,c,cpp,h,hpp,cs,scala,swift,lua,pl,sh,bash,yml,yaml,groovy,rego,env,mk,dockerfile},*.env.example,Jenkinsfile,Dockerfile,Containerfile,Makefile,GNUmakefile}]
-BasedOnStyles = Vale, alex, AIWriting, Grammar, signs-of-ai-writing
+BasedOnStyles = Vale, AIWriting, Grammar, signs-of-ai-writing
 
 Vale.Repetition = error
 Vale.Terms = NO
@@ -281,19 +356,9 @@ Vale.Terms = NO
 # again. These three earn their place; the rest of the prose set does not.
 write-good.Cliches = warning
 proselint.Cliches = warning
-proselint.Corporate = warning
+proselint.CorporateSpeak = warning
 
-alex.Gendered = warning
-alex.Race = error
-alex.LGBTQ = warning
-alex.ProfanityUnlikely = NO
-alex.ProfanityMaybe = NO
-alex.ProfanityLikely = NO
-alex.Ablist = NO
-alex.Condescending = NO
-alex.Suicide = NO
-alex.Press = NO
-alex.OCD = NO
+RedHat.ConsciousLanguage = warning
 
 proselint.Typography = NO
 proselint.Spelling = NO
