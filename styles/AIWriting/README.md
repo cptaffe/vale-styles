@@ -20,6 +20,7 @@ output.
 | `ThematicBreakHeading` | warning | A horizontal rule directly before a heading |
 | `VagueAttribution` | warning | `Experts argue`, `Industry reports` |
 | `AssistantTells` | suggestion | Filler words LLMs lean on |
+| `ExcessWords` | suggestion | Study-measured markers: `underscores the`, `interplay`, `exhibited` |
 | `Didactic` | suggestion | `Let's dive into`, `In this article` |
 | `InlineHeaderList` | suggestion | Bold-run-in list items |
 | `RuleOfThree` | suggestion | `streamlining X, boosting Y, and fostering Z` |

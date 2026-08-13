@@ -1,0 +1,24 @@
+# Marker words from Kobak et al.'s excess-vocabulary study (University of
+# Tubingen / Northwestern, 2024): word frequencies in 14 million PubMed
+# abstracts, 2010-2024, compared against their pre-2023 trendline. "Delves"
+# ran 25 times over trend in 2024; "showcasing" and "underscores" nine
+# times. The excess words were overwhelmingly style words, not nouns.
+#
+# Only the markers no installed rule covers appear here — the study's
+# delves, showcasing, intricate, notably, particularly, additionally,
+# crucial, pivotal, and comprehensive already live in the
+# signs-of-ai-writing package or AssistantTells. "Underscore" is
+# constrained to its figurative verb shape because the character name is
+# everyday vocabulary in engineering prose.
+extends: existence
+message: "'%s' is an excess word LLMs over-produce. Prefer a plainer verb."
+level: suggestion
+ignorecase: true
+link: https://arstechnica.com/ai/2024/07/the-telltale-words-that-could-identify-generative-ai-text/
+tokens:
+  - 'underscor(?:e|es|ed|ing) the'
+  - "underscores? (?:its|their|this|that|how|what)"
+  - 'interplay'
+  - 'exhibited'
+  - 'enhanc(?:e|es|ed|ing)'
+  - '(?:valuable|key|deeper|actionable|critical) insights'
