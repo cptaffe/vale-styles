@@ -1,22 +1,24 @@
 # "A non-loopback default here lets `docker run` bind every interface."
 # "A wider default lets any peer forge X-Forwarded-* headers."
 #
-# The comment states the consequence of a hypothetical change and leaves
-# the instruction implicit. Lead with the imperative, then the why: "Keep
-# the default on loopback; anything wider bypasses the authn-proxy
-# sidecar."
+# The comment leads with the consequence of a hypothetical change and
+# leaves the instruction implicit. Lead with the imperative, then the
+# why: "Keep the default on loopback; a wider default lets any peer
+# forge X-Forwarded-* headers."
 #
-# Two tells, both narrow so ordinary declarative comments stay legal:
-# "here" plus a consequence verb marks a rationale aimed at this code, and
-# a configuration noun (default, setting, flag) plus a consequence verb
-# marks the same shape without the "here".
+# The shape, not a noun list, is the tell. A comment about a hypothetical
+# opens with an indefinite article — "a wider default", "an empty
+# allowlist" — where prose about the code as written says "the" or
+# "this". So the pattern is: line start, "A/An", a short noun phrase,
+# then a consequence verb. Once the imperative leads, the same words
+# mid-comment are legal, which is the point: the rule checks what comes
+# first, not which words appear.
 #
-# NOTE: Vale CONCATENATES multiple `raw:` entries into a single pattern
-# rather than alternating them. Keep every alternative inside one entry.
+# "means"/"causes" stay out of the verb list: "a value of zero means no
+# limit" is ordinary value documentation, not a buried instruction.
 extends: existence
-message: "Rationale-first comment ('%s'). Give the instruction in the imperative, then the why."
+message: "Comment leads with a hypothetical ('%s'). Give the instruction in the imperative, then the why."
 level: suggestion
-ignorecase: true
 nonword: true
 raw:
-  - '\b(?:here (?:lets|allows|means|causes|makes|keeps|enables|ensures|prevents|avoids|would)|(?:default|defaults|value|setting|flag|option|mode|policy|permission|scope|binding|port|timeout|limit) (?:lets|allows|permits|exposes|opens|invites) )\b'
+  - '(?m)^[ \t]*(?:#+[ \t]+|//+[ \t]+)?[Aa]n? (?:[`*\w./-]+[ \t]+){1,4}(?:lets|allows|permits|exposes|opens|leaves|invites|risks|would)\b'
