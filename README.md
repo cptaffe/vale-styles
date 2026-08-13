@@ -37,8 +37,9 @@ vocabularies live under `styles/config/vocabularies/`.
 
 ## Config, hook, and word lists
 
-- `.vale.ini` — the global Vale config. Its `StylesPath` is absolute, so it
-  works from the repo and from its deployed path alike.
+- `.vale.ini.in` — template for the global Vale config. `make config`
+  fills in the home and repo paths and installs the result at
+  `~/Library/Application Support/vale/.vale.ini`.
 - `githooks/pre-commit` — runs Vale over staged prose and blocks on errors;
   chains to a repo's own hook first, and runs Harper as an advisor.
 ## Word lists
@@ -66,8 +67,8 @@ Build the zips, symlink each piece into place, then sync:
 
 ```sh
 make
+make config
 mkdir -p "$HOME/.githooks"
-ln -s "$PWD/.vale.ini" "$HOME/Library/Application Support/vale/.vale.ini"
 ln -s "$PWD/githooks/pre-commit" "$HOME/.githooks/pre-commit"
 git config --global core.hooksPath "$HOME/.githooks"
 bin/words

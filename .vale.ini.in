@@ -2,9 +2,10 @@
 # its own .vale.ini — a repo-local file wins, which is what you want for a
 # project with house rules of its own.
 #
-# This file lives in ~/git/github.com/cptaffe/vale-styles and a symlink at
-# ~/Library/Application Support/vale/.vale.ini deploys it. StylesPath is
-# absolute so the config resolves the same from either path.
+# This file is generated from .vale.ini.in in the vale-styles repo: `make
+# config` fills in the home and repo paths and writes the result to
+# ~/Library/Application Support/vale/.vale.ini. Edit the template, not the
+# generated file.
 #
 # The rule set follows the writing guidance in ~/CLAUDE.md: Orwell's six rules
 # and ASD-STE100 Simplified Technical English. write-good and proselint carry
@@ -17,7 +18,7 @@
 #
 # Run: vale FILE       Update the styles: vale sync
 
-StylesPath = /Users/cotaff/Library/Application Support/vale/styles
+StylesPath = @HOME@/Library/Application Support/vale/styles
 
 # suggestion < warning < error. Set to warning, not suggestion, because the
 # vale-ls language server pushes everything at or above this level into
@@ -34,9 +35,9 @@ MinAlertLevel = warning
 # the next sync overwrites them from the zips.
 Packages = proselint, write-good, Readability, alex, Google, Microsoft, RedHat, \
            https://github.com/ammil-industries/vale-signs-of-ai-writing/releases/latest/download/signs-of-ai-writing.zip, \
-           /Users/cotaff/git/github.com/cptaffe/vale-styles/dist/AIWriting.zip, \
-           /Users/cotaff/git/github.com/cptaffe/vale-styles/dist/STE.zip, \
-           /Users/cotaff/git/github.com/cptaffe/vale-styles/dist/Grammar.zip
+           @REPO@/dist/AIWriting.zip, \
+           @REPO@/dist/STE.zip, \
+           @REPO@/dist/Grammar.zip
 
 Vocab = Technical
 
