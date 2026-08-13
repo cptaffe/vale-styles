@@ -1,0 +1,16 @@
+# "Returns the cached token." -> "Return the cached token."
+#
+# ASD-STE100 writes instructions in the imperative, and PEP 257 asks the
+# same of docstring first lines (pydocstyle D401). The heuristic: a line
+# that opens with a capitalized third-person verb followed by a lowercase
+# word. Requiring the lowercase follower keeps Google-style section
+# headers ("Returns:", "Raises:") legal, which matters because RE2 has no
+# lookahead to exclude the colon directly.
+#
+# Case-sensitive on purpose: mid-sentence "returns the" is ordinary prose.
+extends: existence
+message: "Third-person opener ('%s'). Use the imperative: 'Return the', 'Create a'."
+level: suggestion
+nonword: true
+raw:
+  - '(?m)^ *(?:Returns|Creates|Builds|Gets|Sets|Computes|Checks|Fetches|Parses|Handles|Initializes|Initialises|Validates|Converts|Generates|Extracts|Retrieves|Updates|Deletes|Removes|Adds|Sends|Reads|Writes|Wraps|Runs|Provides|Performs|Calculates|Determines|Loads|Saves|Makes|Takes|Uses|Renders|Registers|Resolves|Constructs) [a-z`]'

@@ -1,0 +1,17 @@
+# "A non-loopback default here lets `docker run` bind every interface."
+#
+# The comment states the consequence of a hypothetical change and leaves
+# the instruction implicit. Lead with the imperative, then the why: "Keep
+# the default on loopback; anything wider bypasses the authn-proxy
+# sidecar."
+#
+# The word "here" is the tell — it marks a rationale aimed at this code
+# rather than a description of behavior, which is why the pattern stays
+# narrow instead of chasing every declarative comment.
+extends: existence
+message: "Rationale-first comment ('%s'). Give the instruction in the imperative, then the why."
+level: suggestion
+ignorecase: true
+nonword: true
+raw:
+  - '\bhere (?:lets|allows|means|causes|makes|keeps|enables|ensures|prevents|avoids|would)\b'
