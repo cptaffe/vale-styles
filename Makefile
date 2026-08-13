@@ -3,10 +3,10 @@ ZIPS := $(STYLES:%=dist/%.zip)
 
 all: $(ZIPS)
 
-dist/%.zip: %/*.yml
+dist/%.zip: styles/%/*.yml styles/%/meta.json
 	mkdir -p dist
 	rm -f $@
-	zip -qr $@ $(@F:.zip=) -x '*.DS_Store'
+	cd styles && zip -qr ../$@ $(@F:.zip=) -x '*.DS_Store'
 
 clean:
 	rm -rf dist

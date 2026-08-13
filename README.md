@@ -14,17 +14,39 @@ global Vale config and the pre-commit hook that runs it.
   check.
 - `Grammar` — fixed word swaps ported from a grammar checker.
 
+The layout follows
+[vale-boilerplate](https://github.com/errata-ai/vale-boilerplate): each
+style lives under `styles/` with its own `README.md` and `meta.json`, and
+vocabularies live under `styles/config/vocabularies/`.
+
+```text
+.
+├── .vale.ini
+├── Makefile
+├── githooks
+│   └── pre-commit
+└── styles
+    ├── AIWriting
+    │   ├── AssistantTells.yml
+    │   ├── ...
+    │   ├── README.md
+    │   └── meta.json
+    ├── Grammar
+    └── STE
+```
+
 ## Config, hook, and word lists
 
 - `.vale.ini` — the global Vale config. Its `StylesPath` is absolute, so it
   works from the repo and from its deployed path alike.
 - `githooks/pre-commit` — runs Vale over staged prose and blocks on errors;
   chains to a repo's own hook first, and runs Harper as an advisor.
-- `vocab/Technical` — the Vale vocabulary the config names with
-  `Vocab = Technical`.
-- `harper/dictionary.txt` — Harper's user dictionary, seeded from the Vale
-  vocabulary. Without it Harper flags most technical terms as misspelled.
-  Harper's rule ignore list lives in the hook.
+Two word lists stay out of this repo because they hold employer-specific
+terms: the Vale vocabulary
+(`~/Library/Application Support/vale/styles/config/vocabularies/Technical`,
+named by `Vocab = Technical`) and Harper's dictionary
+(`~/Library/Application Support/harper-ls/dictionary.txt`, seeded from the
+vocabulary). Harper's rule ignore list lives in the hook.
 
 ## Install
 
@@ -32,17 +54,15 @@ Build the zips, symlink each piece into place, then sync:
 
 ```sh
 make
-mkdir -p "$HOME/Library/Application Support/vale/styles/config/vocabularies" \
-         "$HOME/Library/Application Support/harper-ls" "$HOME/.githooks"
+mkdir -p "$HOME/.githooks"
 ln -s "$PWD/.vale.ini" "$HOME/Library/Application Support/vale/.vale.ini"
-ln -s "$PWD/vocab/Technical" \
-      "$HOME/Library/Application Support/vale/styles/config/vocabularies/Technical"
-ln -s "$PWD/harper/dictionary.txt" \
-      "$HOME/Library/Application Support/harper-ls/dictionary.txt"
 ln -s "$PWD/githooks/pre-commit" "$HOME/.githooks/pre-commit"
 git config --global core.hooksPath "$HOME/.githooks"
 vale sync
 ```
+
+Then create the two word lists at the paths above, or start with empty
+files.
 
 To change a rule: edit it here, run `make`, then run `vale sync`.
 
