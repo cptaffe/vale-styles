@@ -56,7 +56,11 @@ BasedOnStyles = Vale, proselint, write-good, alex, Readability, STE, AIWriting, 
 # "bisexual". The term is the standard name for a store with both a valid-time
 # and a transaction-time axis, so ignore the one token rather than drop the
 # check: LGBTQ is otherwise silent, which is the profile worth keeping.
-TokenIgnores = (bi-temporal)
+#
+# The GCP product names hide the word "Cloud" from Google.WordList, which
+# wants bare "Cloud" written as GCP — right about "our cloud", wrong about a
+# proper noun.
+TokenIgnores = (bi-temporal), (Google Cloud|Cloud (?:Run|SQL|Storage|Logging|Build|Functions))
 
 # --- Orwell, made enforceable ---
 
