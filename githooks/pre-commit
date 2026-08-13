@@ -1,0 +1,88 @@
+#!/bin/sh
+# Global pre-commit hook: run Vale over the prose in staged files.
+#
+# Installed with:  git config --global core.hooksPath ~/.githooks
+#
+# It blocks on ERRORS only. Warnings and suggestions print when you run `vale`
+# yourself; a commit gate that argues about passive voice would just teach you
+# to pass --no-verify, and then it catches nothing.
+#
+# Escape hatches, in order of preference:
+#   git commit --no-verify     skip every hook, once
+#   VALE_SKIP=1 git commit     skip only this check
+#
+# Setting core.hooksPath globally replaces .git/hooks for every repo, so this
+# runs a repo's own pre-commit first and honours its verdict. Husky sets
+# core.hooksPath per repo, and local config beats global, so husky repos never
+# reach this file at all.
+
+set -eu
+
+# --- chain to the repository's own hook, if it has one ----------------------
+git_dir=$(git rev-parse --git-dir)
+repo_hook="$git_dir/hooks/pre-commit"
+if [ -x "$repo_hook" ]; then
+    "$repo_hook" "$@" || exit $?
+fi
+
+# --- Vale ------------------------------------------------------------------
+[ "${VALE_SKIP:-0}" = "1" ] && exit 0
+command -v vale >/dev/null 2>&1 || exit 0
+
+# Staged, still present, and a type Vale can read. Vale pulls the comments out
+# of source files, so this covers comments as well as documents.
+set --
+while IFS= read -r staged; do
+    [ -f "$staged" ] || continue
+    case "$staged" in
+    *.md | *.txt | *.rst | \
+        *.py | *.go | *.js | *.jsx | *.ts | *.tsx | *.rs | *.java | *.kt | \
+        *.rb | *.php | *.c | *.cpp | *.h | *.hpp | *.cs | *.scala | *.swift | \
+        *.lua | *.pl | *.sh | *.bash)
+        set -- "$@" "$staged"
+        ;;
+    esac
+done <<EOF
+$(git diff --cached --name-only --diff-filter=ACM)
+EOF
+
+[ "$#" -eq 0 ] && exit 0
+
+# Harper: grammar and mechanics Vale cannot express — repeated words, "should
+# of", its/it's, then/than. Runs every rule EXCEPT those measured to misfire on
+# technical writing: it wants "GiB" spelled "gibibytes", "config" spelled
+# "configuration", and reads camelCase identifiers as split words.
+#
+# ADVISORY, never blocking. Its rules are tuned for general prose, and blocking
+# on a rule that is wrong a fifth of the time teaches you to pass --no-verify,
+# after which nothing is checked at all. Vale holds the gate; Harper comments.
+if command -v harper-cli >/dev/null 2>&1 && [ "${HARPER_SKIP:-0}" != "1" ]; then
+    harper_ignore="SpellCheck,ExpandMemoryShorthands,ExpandConfiguration,Everyone"
+    harper_ignore="$harper_ignore,UseTitleCase,NumericRangeEnDash,LongSentences,SplitWords"
+    harper_ignore="$harper_ignore,PossessiveNoun,MissingTo,MissingPreposition,AvoidContractions"
+    harper_ignore="$harper_ignore,SentenceCapitalization,OxfordComma,MassNouns,OrthographicConsistency"
+    harper_ignore="$harper_ignore,ExpandDirectory,ExpandDependencies"
+    if ! harper-cli lint --ignore "$harper_ignore" --no-color "$@" >/tmp/harper-hook.$$ 2>&1; then
+        printf '\nHarper (advisory, not blocking):\n' >&2
+        grep -E '^ *[0-9]+ .|\[[A-Za-z]+::' /tmp/harper-hook.$$ | head -20 >&2
+        printf '  full output: harper-cli lint FILE   |   silence: HARPER_SKIP=1\n' >&2
+    fi
+    rm -f /tmp/harper-hook.$$
+fi
+
+if ! vale --minAlertLevel=error "$@"; then
+    cat >&2 <<'MSG'
+
+Vale found errors in the staged prose above.
+
+  vale FILE                 see everything, including warnings
+  VALE_SKIP=1 git commit    commit anyway, this once
+  git commit --no-verify    skip all hooks
+
+Config: ~/Library/Application Support/vale/.vale.ini
+Add technical words to: styles/config/vocabularies/Technical/accept.txt
+MSG
+    exit 1
+fi
+
+exit 0

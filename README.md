@@ -1,6 +1,7 @@
 # vale-styles
 
-Hand-written [Vale](https://vale.sh) styles, packed as local zips.
+Hand-written [Vale](https://vale.sh) styles, packed as local zips, plus the
+global Vale config and the pre-commit hook that runs it.
 
 ## Styles
 
@@ -13,14 +14,23 @@ Hand-written [Vale](https://vale.sh) styles, packed as local zips.
   check.
 - `Grammar` — fixed word swaps ported from a grammar checker.
 
-## Use
+## Config and hook
 
-Build the zips with `make`. Then point the global `.vale.ini` at them:
+- `.vale.ini` — the global Vale config. Its `StylesPath` is absolute, so it
+  works from the repo and from its deployed path alike.
+- `githooks/pre-commit` — runs Vale over staged prose and blocks on errors;
+  chains to a repo's own hook first.
 
-```ini
-Packages = /path/to/vale-styles/dist/AIWriting.zip, \
-           /path/to/vale-styles/dist/STE.zip, \
-           /path/to/vale-styles/dist/Grammar.zip
+## Install
+
+Build the zips, symlink the config and the hook, then sync:
+
+```sh
+make
+ln -s "$PWD/.vale.ini" "$HOME/Library/Application Support/vale/.vale.ini"
+ln -s "$PWD/githooks/pre-commit" "$HOME/.githooks/pre-commit"
+git config --global core.hooksPath "$HOME/.githooks"
+vale sync
 ```
 
 To change a rule: edit it here, run `make`, then run `vale sync`.
