@@ -1,0 +1,23 @@
+# The portable slice of the ASD-STE100 dictionary: unapproved words with
+# their approved replacements. The full dictionary holds about 900
+# approved words and cannot be pattern-matched; these pairs are the
+# canonical published examples that no installed rule already covers—
+# write-good.TooWordy owns commence, terminate, utilize, prior to, in
+# order to, sufficient, and additional, and RedHat.SimpleWords owns
+# another slab, so this list is filtered against both.
+#
+# Suggestion, like SentenceLength: these words are correct English that
+# STE forbids ("verify" measured 248 hits on a 300-file corpus), so the
+# rule advises on request rather than nagging.
+extends: substitution
+message: "STE: use '%s' rather than '%s'."
+level: suggestion
+ignorecase: true
+swap:
+  carry out: do
+  perform: do
+  approximately: about
+  assist: help
+  modification: change
+  ensure: make sure
+  verify: make sure

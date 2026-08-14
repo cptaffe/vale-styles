@@ -1,13 +1,14 @@
-# "Bash is gone from the agent config."
+# "Bash is gone from the agent config." / "gone from both sides"
 #
-# "Gone from" narrates an absence; technical prose states the operation.
-# "Removed from" names what happened and fits every measured use ("the
-# backups are gone from the UI", "gone from the agent config"). Error:
-# the fix is mechanical, and the ~10 corpus hits were uniformly the
-# target usage.
-extends: substitution
-message: "Use '%s' rather than '%s'."
+# "Gone from" narrates an absence; technical prose states the operation:
+# "removed from" for a removal, "changed from" for a transition. Widened
+# from 'gone from the' after a corpus measure found only removal-sense
+# uses ("gone from the UI", "gone from all", "gone from both sides").
+# Error: the fix is mechanical and the 11 measured hits had no
+# false-positive class.
+extends: existence
+message: "'%s' narrates an absence. State the operation: 'removed from' or 'changed from'."
 level: error
 ignorecase: true
-swap:
-  gone from the: removed from the
+tokens:
+  - gone from

@@ -1,0 +1,17 @@
+- name: perfect passive fires
+  about: "'has been configured' is a complex construction"
+  rule: ComplexVerbs.yml
+  input: The bucket has been configured for public access.
+  contains: 'STE.ComplexVerbs'
+
+- name: simple past stays quiet
+  about: the fix is a simple tense
+  rule: ComplexVerbs.yml
+  input: We configured the bucket for public access.
+  want: ''
+
+- name: adjective after has stays quiet
+  about: "'has advanced features' is not a tense"
+  rule: ComplexVerbs.yml
+  input: The service has advanced features for batching.
+  want: ''

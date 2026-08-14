@@ -1,0 +1,11 @@
+- name: seven sentences fire
+  about: past the six-sentence cap
+  rule: ParagraphLength.yml
+  input: One is here. Two is here. Three is here. Four is here. Five is here. Six is here. Seven is here.
+  contains: 'STE.ParagraphLength'
+
+- name: six sentences stay quiet
+  about: at the cap, not past it
+  rule: ParagraphLength.yml
+  input: One is here. Two is here. Three is here. Four is here. Five is here. Six is here.
+  want: ''

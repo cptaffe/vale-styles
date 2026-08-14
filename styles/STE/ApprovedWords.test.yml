@@ -1,0 +1,11 @@
+- name: unapproved word fires
+  about: "'verify' swaps to 'make sure' in STE"
+  rule: ApprovedWords.yml
+  input: Verify the checksum before you continue.
+  contains: 'STE.ApprovedWords'
+
+- name: approved replacement stays quiet
+  about: the fix is not a match
+  rule: ApprovedWords.yml
+  input: Make sure the checksum is correct before you continue.
+  want: ''

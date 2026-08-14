@@ -1,0 +1,20 @@
+# "The bucket has been configured." / "will have been deleted"
+#
+# STE forbids complex verb constructions: only the infinitive, the
+# imperative, and the simple present, past, and future are approved. The
+# full ban (every present perfect, "we have received") cannot be matched
+# without part-of-speech tagging—"has advanced features" is not a
+# tense—so this rule takes the unambiguous core: perfect and progressive
+# passives built on "been", which nothing but a complex construction can
+# produce. "The bucket has been configured" becomes "The bucket is
+# configured" or "We configured the bucket".
+#
+# Suggestion, like SentenceLength: correct English that STE forbids
+# (34 hits on a 300-file corpus).
+extends: existence
+message: "'%s' is a complex verb construction. STE allows only simple tenses."
+level: suggestion
+ignorecase: true
+nonword: true
+raw:
+  - '\b(?:has|have|had|will have) been [\w-]+(?:ed|en|ing)\b'

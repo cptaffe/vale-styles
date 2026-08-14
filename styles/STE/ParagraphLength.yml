@@ -1,0 +1,11 @@
+# ASD-STE100 caps a paragraph at six sentences and one topic. Sentence
+# ends are counted by terminal punctuation, so an abbreviation like
+# "e.g." inflates the count by one—another reason this stays a
+# suggestion, alongside the SentenceLength precedent for STE structure
+# rules.
+extends: occurrence
+message: "Paragraph runs past 6 sentences. ASD-STE100 wants one topic; split it."
+level: suggestion
+scope: paragraph
+token: '[.!?](?:\s|$)'
+max: 6

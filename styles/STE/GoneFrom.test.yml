@@ -4,6 +4,12 @@
   input: After the sync, the flag is gone from the config.
   contains: 'STE.GoneFrom'
 
+- name: gone from without article fires
+  about: the widened shape, no determiner needed
+  rule: GoneFrom.yml
+  input: The peering is gone from both sides.
+  contains: 'STE.GoneFrom'
+
 - name: removed from stays quiet
   about: the technical phrasing is the fix, not a match
   rule: GoneFrom.yml
@@ -11,7 +17,7 @@
   want: ''
 
 - name: bare gone stays quiet
-  about: only the 'gone from the' shape is banned
+  about: only the 'gone from' shape is banned
   rule: GoneFrom.yml
   input: The old worktree is gone.
   want: ''
