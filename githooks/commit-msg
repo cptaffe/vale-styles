@@ -1,0 +1,131 @@
+#!/bin/sh
+# Global commit-msg hook: check commit-message mechanics, then run Vale over
+# the message itself.
+#
+# Installed with:  git config --global core.hooksPath ~/.githooks
+#
+# Mechanics (subject length, capitalization, trailing period, body line
+# length) always block. Vale blocks on ERRORS only -- warnings print so you
+# see them, but a gate that argues about voice just teaches you to pass
+# --no-verify, and then it catches nothing. See pre-commit for the same
+# call made about staged prose.
+#
+# Escape hatches, in order of preference:
+#   git commit --no-verify     skip every hook, once
+#   VALE_SKIP=1 git commit     skip the Vale half only; mechanics still run
+#
+# Setting core.hooksPath globally replaces .git/hooks for every repo, so a
+# repo with its own commit-msg hook never reaches this file -- local config
+# beats global.
+
+set -eu
+
+msg_file=$1
+
+# --- skip entirely -----------------------------------------------------
+
+# A merge commit's message is git's own summary, not something to hold to
+# house style.
+git_dir=$(git rev-parse --git-dir)
+[ -f "$git_dir/MERGE_HEAD" ] && exit 0
+
+# CI systems key off "[ci skip]"/"[skip ci]" in the message that triggers
+# them; a hook arguing with that message is pointless.
+grep -qiE '\[(ci skip|skip ci)\]' "$msg_file" && exit 0
+
+# --- strip to what the author actually wrote ----------------------------
+
+# Comment lines are `git commit`'s own instructions, never the author's
+# words. `-v`/`--verbose` appends the staged diff below the message, and a
+# "diff --git" line marks where that starts; a real subject line never
+# begins with either.
+tmp=$(mktemp) || exit 1
+trap 'rm -f "$tmp"' EXIT
+sed -e '/^diff --git/,$d' -e '/^#/d' "$msg_file" >"$tmp"
+
+# An all-blank message after stripping is git's own problem to reject, not
+# this hook's.
+[ -n "$(tr -d '[:space:]' <"$tmp")" ] || exit 0
+
+subject=$(sed -n '1p' "$tmp")
+fail=0
+
+# --- mechanics -----------------------------------------------------------
+
+subject_len=$(printf '%s' "$subject" | wc -m | tr -d ' ')
+if [ "$subject_len" -gt 50 ]; then
+    echo "commit-msg: subject line is $subject_len characters, over 50" >&2
+    fail=1
+fi
+
+case "$subject" in
+*.)
+    echo "commit-msg: subject line ends with a period" >&2
+    fail=1
+    ;;
+esac
+
+# A conventional-commit prefix ('feat(scope): ') is legal; the
+# capitalization check applies to the word that follows it.
+word=$(printf '%s' "$subject" | sed -E 's/^[a-zA-Z]+(\([^)]*\))?: ?//')
+first=$(printf '%s' "$word" | grep -oE '[A-Za-z]' | head -1)
+if [ -n "$first" ] && ! printf '%s' "$first" | grep -q '[A-Z]'; then
+    echo "commit-msg: subject line is not capitalized" >&2
+    fail=1
+fi
+
+# Body lines may run past 72 for a URL or path with no spaces past that
+# column; a prose line that long is a wrapping mistake, not an exemption.
+line_no=1
+while IFS= read -r line; do
+    line_no=$((line_no + 1))
+    [ "$line_no" -eq 2 ] && continue # subject line, checked above
+    len=$(printf '%s' "$line" | wc -m | tr -d ' ')
+    [ "$len" -le 72 ] && continue
+    tail=$(printf '%s' "$line" | cut -c73-)
+    case "$tail" in
+    *' '*)
+        echo "commit-msg: line $line_no is $len characters, over 72" >&2
+        fail=1
+        ;;
+    esac
+done <"$tmp"
+
+if [ "$fail" -ne 0 ]; then
+    cat >&2 <<'MSG'
+
+Fix the commit message and try again.
+
+  git commit --amend        rewrite the subject or body
+  git commit --no-verify    skip all hooks
+MSG
+    exit 1
+fi
+
+# --- Vale ------------------------------------------------------------------
+
+[ "${VALE_SKIP:-0}" = "1" ] && exit 0
+command -v vale >/dev/null 2>&1 || exit 0
+
+if vale_out=$(vale --no-color --output=line --ext=.md <"$tmp" 2>&1); then
+    vale_rc=0
+else
+    vale_rc=$?
+fi
+
+if [ -n "$vale_out" ]; then
+    printf '\nVale, on the commit message:\n%s\n' "$vale_out" >&2
+fi
+
+if [ "$vale_rc" -ne 0 ]; then
+    cat >&2 <<'MSG'
+
+Vale found errors in the commit message above.
+
+  VALE_SKIP=1 git commit --amend    amend anyway, this once
+  git commit --no-verify            skip all hooks
+MSG
+    exit 1
+fi
+
+exit 0
