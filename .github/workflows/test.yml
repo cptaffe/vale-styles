@@ -1,0 +1,29 @@
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+
+      # go.mod still declares the upstream module path, so
+      # `go install github.com/cptaffe/vale/...@groovy` cannot resolve.
+      # Clone and build instead.
+      - name: Build vale (cptaffe/vale@groovy)
+        run: |
+          git clone --branch groovy --depth 1 \
+            https://github.com/cptaffe/vale /tmp/vale
+          go -C /tmp/vale build -o "$HOME/go/bin/vale" ./cmd/vale
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+      - name: Build the style zips
+        run: make
+
+      - name: Run the rule fixtures
+        run: make test
