@@ -1,0 +1,13 @@
+# "Bash is gone from the agent config."
+#
+# "Gone from" narrates an absence; technical prose states the operation.
+# "Removed from" names what happened and fits every measured use ("the
+# backups are gone from the UI", "gone from the agent config"). Error:
+# the fix is mechanical, and the ~10 corpus hits were uniformly the
+# target usage.
+extends: substitution
+message: "Use '%s' rather than '%s'."
+level: error
+ignorecase: true
+swap:
+  gone from the: removed from the

@@ -388,6 +388,10 @@ STE.BuriedInstruction = warning
 # dash blocking a commit in a legacy file would be rude.
 Microsoft.Dashes = warning
 
+# "gone from the"—error in prose, warning here for the same reason as
+# Dashes.
+STE.GoneFrom = warning
+
 # Terminology drift matters in comments too; the rest of the house guides are
 # written for paragraphs and only produce noise on fragments.
 Microsoft.Terms = suggestion

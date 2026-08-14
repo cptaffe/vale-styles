@@ -1,0 +1,17 @@
+- name: gone from the fires
+  about: informal removal phrasing
+  rule: GoneFrom.yml
+  input: After the sync, the flag is gone from the config.
+  contains: 'STE.GoneFrom'
+
+- name: removed from stays quiet
+  about: the technical phrasing is the fix, not a match
+  rule: GoneFrom.yml
+  input: After the sync, the flag was removed from the config.
+  want: ''
+
+- name: bare gone stays quiet
+  about: only the 'gone from the' shape is banned
+  rule: GoneFrom.yml
+  input: The old worktree is gone.
+  want: ''
