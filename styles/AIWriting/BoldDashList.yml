@@ -1,0 +1,17 @@
+# "- **username** — matched case-insensitively against the directory"
+#
+# A bold list lead glued to its explanation with a dash. The colon form
+# says the same thing and reads as a definition; a table says it better
+# when every item carries one. Warning where InlineHeaderList is a
+# suggestion: the dash variant has a concrete fix—swap the dash for a
+# colon—so it earns the louder tier.
+#
+# Raw scope, because parsed scopes drop the bullet marker and the bold
+# markup.
+extends: existence
+message: "Bold list lead joined by a dash ('%s'). Use '**lead**: text' or a table."
+level: warning
+scope: raw
+nonword: true
+raw:
+  - '(?m)^\s*(?:[-*+]|\d+\.)\s+\*\*[^*\n]+\*\*\s*(?:—|--)'

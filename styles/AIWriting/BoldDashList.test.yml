@@ -1,0 +1,29 @@
+- name: bold lead with spaced em dash fires
+  about: the rule's own header example
+  rule: BoldDashList.yml
+  input: "- **username** — matched case-insensitively against the directory"
+  contains: 'AIWriting.BoldDashList'
+
+- name: bold lead with unspaced em dash fires
+  about: the post-Microsoft.Dashes form of the same shape
+  rule: BoldDashList.yml
+  input: "- **`make up` fails**—install one of the runtimes"
+  contains: 'AIWriting.BoldDashList'
+
+- name: numbered bold lead with double hyphen fires
+  about: the double-hyphen stand-in for an em dash
+  rule: BoldDashList.yml
+  input: "1. **Thing** -- the reason it exists"
+  contains: 'AIWriting.BoldDashList'
+
+- name: colon form does not fire
+  about: the fix the message asks for
+  rule: BoldDashList.yml
+  input: "- **lead**: text after a colon is the wanted form"
+  want: ''
+
+- name: mid-sentence em dash in a plain item does not fire
+  about: only the bold-lead join is the tell
+  rule: BoldDashList.yml
+  input: "- a plain item with an em dash—mid-sentence stays quiet"
+  want: ''
