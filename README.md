@@ -44,10 +44,11 @@ vocabularies live under `styles/config/vocabularies/`.
   chains to a repo's own hook first, and runs Harper as an advisor.
 ## Word lists
 
-One source of truth feeds both spellcheckers. `words/base.txt` lives in
-git and holds generic technical terms; `words/local.txt` holds
-employer-specific terms, stays gitignored, and never leaves the machine.
-`bin/words` concatenates the two and renders each consumer's format:
+One source of truth feeds both spellcheckers. `words/base.txt` holds
+technical terms and `words/local.txt` holds employer-specific ones. Both
+stay gitignored and never leave the machine—a word list names the tech
+stack it describes. `bin/words` concatenates the two and renders each
+consumer's format:
 
 - the Vale vocabulary
   (`~/Library/Application Support/vale/styles/config/vocabularies/Technical/accept.txt`,
@@ -74,6 +75,9 @@ git config --global core.hooksPath "$HOME/.githooks"
 bin/words
 vale sync
 ```
+
+`words/` starts empty on a fresh clone. Create `words/base.txt` (and
+`words/local.txt` if needed), one word per line, then run `bin/words`.
 
 To change a rule: edit it here, run `make`, then run `vale sync`.
 

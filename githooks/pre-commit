@@ -31,9 +31,10 @@ command -v vale >/dev/null 2>&1 || exit 0
 
 # --- word lists -------------------------------------------------------------
 # The Vale vocabulary and the Harper dictionary render from words/base.txt
-# (committed) and words/local.txt (gitignored) in the repo this hook lives
-# in. Re-render when a source file is newer than the deployed vocabulary, so
-# an edit to either list deploys on the next commit anywhere.
+# and words/local.txt in the repo this hook lives in—both gitignored; the
+# word lists name the tech stack and the employer, so they never leave the
+# machine. Re-render when a source file is newer than the deployed
+# vocabulary, so an edit to either list deploys on the next commit anywhere.
 words_root=$(dirname "$(readlink -f "$0")")/..
 vocab="$HOME/Library/Application Support/vale/styles/config/vocabularies/Technical/accept.txt"
 for w in "$words_root/words/base.txt" "$words_root/words/local.txt"; do

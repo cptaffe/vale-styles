@@ -2,7 +2,7 @@
 # Render the word list into each consumer's format.
 #
 # The source of truth is two files in this repo's words/ directory:
-#   base.txt   committed; generic technical terms
+#   base.txt   gitignored; generic technical terms
 #   local.txt  gitignored; employer-specific terms, never committed
 #
 # Outputs, overridable for testing:
@@ -19,11 +19,12 @@ vocab_dir="${VALE_VOCAB_DIR:-$HOME/Library/Application Support/vale/styles/confi
 dict="${HARPER_DICT:-$HOME/Library/Application Support/harper-ls/dictionary.txt}"
 
 src() {
-    cat "$root/words/base.txt"
-    if [ -f "$root/words/local.txt" ]; then
-        printf '\n'
-        cat "$root/words/local.txt"
-    fi
+    for f in "$root/words/base.txt" "$root/words/local.txt"; do
+        if [ -f "$f" ]; then
+            cat "$f"
+            printf '\n'
+        fi
+    done
 }
 
 mkdir -p "$vocab_dir" "$(dirname "$dict")"
