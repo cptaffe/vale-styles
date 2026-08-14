@@ -77,7 +77,7 @@ fi
 # Body lines may run past 72 for a URL or path with no spaces past that
 # column; a prose line that long is a wrapping mistake, not an exemption.
 line_no=0
-while IFS= read -r line; do
+while IFS= read -r line || [ -n "$line" ]; do
     line_no=$((line_no + 1))
     [ "$line_no" -eq 1 ] && continue # subject line, checked above
     len=$(printf '%s' "$line" | wc -m | tr -d ' ')
