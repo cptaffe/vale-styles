@@ -111,8 +111,8 @@ write-good.E-Prime = suggestion
 #
 # One implementation, per the dedup policy: RedHat.ConsciousLanguage. Its
 # term list (master/slave, whitelist/blacklist, sanity-check) is the
-# vocabulary that actually appears in systems docs, and it measured quiet
-# on ours—the silent-until-it-matters profile. The alex package is gone
+# vocabulary that actually appears in systems docs, and it fired once
+# across our corpora—the silent-until-it-matters profile. The alex package is gone
 # entirely (2026-08): its armed rules (Gendered, Race, LGBTQ) fired zero
 # times across two corpora; its Profanity family measured 13 of 13 false
 # (dead, execution, kill, crash, premature); its LGBTQ rule needed a
@@ -250,7 +250,7 @@ Microsoft.Quotes = NO
 #
 # 103 package rules never appeared in this file and ran at whatever level
 # their authors chose. Measured over a 280-file docs corpus; the offenders
-# get keys, the quiet rest keep their defaults.
+# get keys, the rest keep their defaults.
 
 # Fires on "Label: Sentence" list items, standard in README-style docs
 # (803 hits, near-all false).

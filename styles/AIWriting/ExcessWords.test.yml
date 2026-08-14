@@ -4,7 +4,7 @@
   input: This result underscores the importance of testing.
   contains: 'AIWriting.ExcessWords'
 
-- name: proper noun stays quiet
+- name: proper noun does not fire
   about: the character named Underscore, not the verb form
   rule: ExcessWords.yml
   input: The character named Underscore appeared in the comic strip.

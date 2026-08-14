@@ -4,7 +4,7 @@
   input: Three stock images over one shared workspace.
   contains: 'AIWriting.CountContrast'
 
-- name: count-over-count mid-sentence stays quiet
+- name: count-over-count mid-sentence does not fire
   about: not anchored at sentence start, so ordinary prose is legal
   rule: CountContrast.yml
   input: You can spread the three values over one line to keep the diff small.

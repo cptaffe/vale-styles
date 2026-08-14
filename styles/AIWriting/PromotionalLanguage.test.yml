@@ -4,7 +4,7 @@
   input: The office is nestled in the heart of downtown.
   contains: 'AIWriting.PromotionalLanguage'
 
-- name: plain description stays quiet
+- name: plain description does not fire
   about: describes the location without selling it
   rule: PromotionalLanguage.yml
   input: The office sits in downtown, three blocks from the station.

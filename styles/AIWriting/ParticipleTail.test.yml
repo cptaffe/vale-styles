@@ -4,7 +4,7 @@
   input: The team shipped the fix early, highlighting their commitment to quality.
   contains: 'AIWriting.ParticipleTail'
 
-- name: past-tense clause stays quiet
+- name: past-tense clause does not fire
   about: "'highlighted' is not the comma-plus-participle shape"
   rule: ParticipleTail.yml
   input: The fix shipped early, and it was highlighted in the release notes.

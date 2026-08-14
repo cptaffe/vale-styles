@@ -4,7 +4,7 @@
   input: Experts agree that the migration reduced latency significantly.
   contains: 'AIWriting.VagueAttribution'
 
-- name: named source stays quiet
+- name: named source does not fire
   about: the claim is attributed to a real, named team
   rule: VagueAttribution.yml
   input: The engineering team agrees that the migration reduced latency significantly.

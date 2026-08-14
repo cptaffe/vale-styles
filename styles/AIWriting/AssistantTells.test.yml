@@ -4,7 +4,7 @@
   input: This approach is genuinely useful for the team.
   contains: 'AIWriting.AssistantTells'
 
-- name: genuine noun form stays quiet
+- name: genuine noun form does not fire
   about: "'genuine' is not 'genuinely'; a near miss, not a match"
   rule: AssistantTells.yml
   input: This approach is a genuine improvement for the team.

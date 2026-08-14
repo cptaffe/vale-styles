@@ -4,7 +4,7 @@
 # as a slogan, not a sentence. A person writing plainly gives it a verb —
 # "three stock images share a workspace". Anchored to the start of a
 # sentence so ordinary prose like "spread the three values over one line"
-# stays quiet; the comma form only fires when the pair is the whole
+# does not match; the comma form only fires when the pair is the whole
 # sentence.
 #
 # NOTE: Vale CONCATENATES multiple `raw:` entries into a single pattern

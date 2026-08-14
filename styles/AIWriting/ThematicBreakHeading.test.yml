@@ -8,7 +8,7 @@
     ## Next Section
   contains: 'AIWriting.ThematicBreakHeading'
 
-- name: break followed by prose stays quiet
+- name: break followed by prose does not fire
   about: a paragraph sits between the break and the heading
   rule: ThematicBreakHeading.yml
   input: |

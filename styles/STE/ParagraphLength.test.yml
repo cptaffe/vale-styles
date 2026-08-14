@@ -4,7 +4,7 @@
   input: One is here. Two is here. Three is here. Four is here. Five is here. Six is here. Seven is here.
   contains: 'STE.ParagraphLength'
 
-- name: six sentences stay quiet
+- name: six sentences do not fire
   about: at the cap, not past it
   rule: ParagraphLength.yml
   input: One is here. Two is here. Three is here. Four is here. Five is here. Six is here.

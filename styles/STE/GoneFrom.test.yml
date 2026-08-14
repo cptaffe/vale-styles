@@ -10,13 +10,13 @@
   input: The peering is gone from both sides.
   contains: 'STE.GoneFrom'
 
-- name: removed from stays quiet
+- name: removed from does not fire
   about: the technical phrasing is the fix, not a match
   rule: GoneFrom.yml
   input: After the sync, the flag was removed from the config.
   want: ''
 
-- name: bare gone stays quiet
+- name: bare gone does not fire
   about: only the 'gone from' shape is banned
   rule: GoneFrom.yml
   input: The old worktree is gone.

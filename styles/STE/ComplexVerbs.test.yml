@@ -4,13 +4,13 @@
   input: The bucket has been configured for public access.
   contains: 'STE.ComplexVerbs'
 
-- name: simple past stays quiet
+- name: simple past does not fire
   about: the fix is a simple tense
   rule: ComplexVerbs.yml
   input: We configured the bucket for public access.
   want: ''
 
-- name: adjective after has stays quiet
+- name: adjective after has does not fire
   about: "'has advanced features' is not a tense"
   rule: ComplexVerbs.yml
   input: The service has advanced features for batching.

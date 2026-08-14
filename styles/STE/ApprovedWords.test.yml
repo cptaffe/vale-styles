@@ -4,7 +4,7 @@
   input: Verify the checksum before you continue.
   contains: 'STE.ApprovedWords'
 
-- name: approved replacement stays quiet
+- name: approved replacement does not fire
   about: the fix is not a match
   rule: ApprovedWords.yml
   input: Make sure the checksum is correct before you continue.

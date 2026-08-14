@@ -4,7 +4,7 @@
   input: The rollout faces several challenges before general availability.
   contains: 'AIWriting.ChallengesFormula'
 
-- name: specific bugs stay quiet
+- name: specific bugs do not fire
   about: named, tracked bugs are not the vague-challenges formula
   rule: ChallengesFormula.yml
   input: The rollout hit three specific bugs, each tracked and fixed within a day.

@@ -4,7 +4,7 @@
   input: "## \U0001F680 Getting Started"
   contains: 'AIWriting.EmojiDecoration'
 
-- name: emoji inside a sentence stays quiet
+- name: emoji inside a sentence does not fire
   about: the rule only fires at the start of a heading or list item
   rule: EmojiDecoration.yml
   input: "The rocket \U0001F680 emoji shows up mid-sentence here, not at the start."
