@@ -25,5 +25,5 @@
 - name: mid-sentence em dash in a plain item does not fire
   about: only the bold-lead join is the tell
   rule: BoldDashList.yml
-  input: "- a plain item with an em dash—mid-sentence stays quiet"
+  input: "- a plain item with an em dash—mid-sentence does not match"
   want: ''
