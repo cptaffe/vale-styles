@@ -16,6 +16,13 @@
 # heading above it. Keep each rule inside its own [glob] block; a setting that
 # drifts below the next heading silently changes which files it governs.
 #
+# PROMOTION POLICY: a check runs at error, which blocks a commit, only when
+# one of two things is true. Either the fix is mechanical and the check has
+# no known false-positive class, so there is nothing to argue about. Or the
+# check marks content that must never ship, no matter how much work the fix
+# takes. Everything else sits at warning: real enough to show, not certain
+# enough to block.
+#
 # Run: vale FILE       Update the styles: vale sync
 
 StylesPath = @HOME@/Library/Application Support/vale/styles
@@ -64,14 +71,20 @@ TokenIgnores = (Google Cloud|Cloud (?:Run|SQL|Storage|Logging|Build|Functions))
 # "validate" and "requirement" wordy—so it advises rather than insists.
 write-good.TooWordy = warning
 proselint.Very = error
-proselint.Annotations = error
+
+# Annotations catches TODO/FIXME/XXX markers. Demoted: a TODO may ship on
+# purpose, tracked rather than fixed on the spot, so blocking a commit on
+# one would be wrong.
+proselint.Annotations = warning
 
 # Rule 4: never use the passive where you can use the active.
 write-good.Passive = warning
 
-# Rule 1: no figure of speech you are used to seeing in print.
-write-good.Cliches = error
-proselint.Cliches = error
+# Rule 1: no figure of speech you are used to seeing in print. Demoted:
+# fixing a cliché takes judgment about the replacement, not a mechanical
+# swap, so it must not block a commit.
+write-good.Cliches = warning
+proselint.Cliches = warning
 
 # Rule 5: no jargon where an everyday word exists.
 proselint.Jargon = warning
