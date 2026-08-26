@@ -401,6 +401,17 @@ STE.BuriedInstruction = warning
 # dash blocking a commit in a legacy file would be rude.
 Microsoft.Dashes = warning
 
+# Same demotion, for a reason of its own: a suffix comment on a lint directive
+# puts a hyphen between a machine-read token and the human reason for it --
+# "# noqa: BLE001 - unknown id is fine", "# pragma: no cover - best-effort
+# cleanup". That is the idiom, not a dash, and the rule's regex cannot tell
+# them apart (RE2 has no lookbehind, so the directive prefix is unmatchable).
+# Measured: 94 of these in one 220-file commit, every one that shape. By the
+# promotion policy above, a check with a known false-positive class does not
+# gate a commit. In prose, where there is no directive to suffix, it stays an
+# error.
+AIWriting.SpacedHyphen = warning
+
 # "gone from the"—error in prose, warning here for the same reason as
 # Dashes.
 STE.GoneFrom = warning
