@@ -15,7 +15,7 @@ config: .vale.ini.in
 dist/%.zip: styles/%/*.yml styles/%/meta.json
 	mkdir -p dist
 	rm -f $@
-	cd styles && zip -qr ../$@ $(@F:.zip=) -x '*.DS_Store'
+	cd styles && zip -qr ../$@ $(@F:.zip=) -x '*.DS_Store' '*.test.yml'
 
 # Runs each rule's fixtures in isolation, so it needs no built zip and no
 # installed config: a rule and its .test.yml are read straight from styles/.
